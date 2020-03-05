@@ -39,11 +39,12 @@
     #    scale_build_distribution: SUSE_LINUX
     #  when: ansible_distribution == 'Suse'
 
-    - name: check | Check Linux distribution
-      assert:
-        that: scale_build_distribution is defined
-        msg: >-
-          Unsupported Linux distribution {{ ansible_distribution }}!
+    # REMOVE_FOR_UBUNTU
+    # - name: check | Check Linux distribution
+    #   assert:
+    #     that: scale_build_distribution is defined
+    #     msg: >-
+    #       Unsupported Linux distribution {{ ansible_distribution }}!
 
 #
 # Build kernel extension
