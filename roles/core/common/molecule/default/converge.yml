@@ -3,6 +3,7 @@
   hosts: all
   vars:
     scale_version: "{{ lookup('env', 'MY_SCALE_VERSION') }}"
+    # TODO we probably want to check multiple package methods by override.. 
     scale_install_localpkg_path: "/root/Spectrum_Scale_Advanced-5.0.4.0-x86_64-Linux-install"
   tasks:
     - name: "Include precheck roles"
