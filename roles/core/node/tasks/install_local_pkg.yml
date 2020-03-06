@@ -55,9 +55,9 @@
 - name: install | Stat extracted packages
   stat:
     path: "{{ gpfs_path }}/gpfs_rpms"
-  register: scale_install_gpfs_rpmdir
+  register: scale_install_gpfs_pkgdir
 
-- bl ock:  ## when: not scale_install_gpfs_rpmdir.stat.exists
+- bl ock:  ## when: not scale_install_gpfs_pkgdir.stat.exists
     - name: install | Stat temporary directory
       stat:
         path: "{{ scale_install_localpkg_tmpdir_path }}"
@@ -77,7 +77,7 @@
         src: "{{ scale_install_localpkg_path }}"
         dest: "{{ scale_install_localpkg_tmpdir_path }}"
         mode: a+x
-  when: not scale_install_gpfs_rpmdir.stat.exists
+  when: not scale_install_gpfs_pkgdir.stat.exists
 
 #
 # Extract installation package
@@ -92,13 +92,13 @@
 - name: install | Stat extracted packages
   stat:
     path: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms
-  register: scale_install_gpfs_rpmdir
+  register: scale_install_gpfs_pkgdir
 
 - name: install | Check extracted packages
   assert:
     that:
-      - scale_install_gpfs_rpmdir.stat.exists
-      - scale_install_gpfs_rpmdir.stat.isdir
+      - scale_install_gpfs_pkgdir.stat.exists
+      - scale_install_gpfs_pkgdir.stat.isdir
     msg: >-
       The variable 'scale_version' doesn't seem to match the contents of the
       local installation package!
