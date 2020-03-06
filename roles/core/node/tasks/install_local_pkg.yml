@@ -86,11 +86,11 @@
     localpkg: "{{ scale_install_localpkg_tmpdir_path + '/' + scale_install_localpkg_path | basename }}"
   command: "{{ localpkg + ' --silent' }}"
   args:
-    creates: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms
+    creates: "{{ scale_install_localpkg_path }}"
 
 - name: install | Stat extracted packages
   stat:
-    path: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms
+    path: "{{ scale_install_gpfs_pkgdir_name }}"
   register: scale_install_gpfs_pkgdir
 
 - name: install | Check extracted packages
@@ -116,7 +116,7 @@
 #
 - name: install | Find GPFS BASE (gpfs.base) RPM
   find:
-    paths: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/
+    paths: "{{ scale_install_gpfs_pkgdir_name }}"
     patterns: gpfs.base-*.{{ scale_architecture }}.rpm
   register: scale_install_gpfs_base
 
@@ -125,14 +125,14 @@
     that: scale_install_gpfs_base.matched > 0
     msg: >-
       No GPFS BASE (gpfs.base) RPM found:
-      /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/gpfs.base-*.{{ scale_architecture }}.rpm
+      {{ scale_install_localpkg_path }}/gpfs.base-*.{{ scale_architecture }}.rpm
 
 #
 # Find GPFS gpfs.docs
 #
 - name: install | Find GPFS docs (gpfs.docs) RPM
   find:
-    paths: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/
+    paths: "{{ scale_install_localpkg_path }}"
     patterns: gpfs.docs-*.noarch.rpm
   register: scale_install_gpfs_doc
 
@@ -141,14 +141,14 @@
     that: scale_install_gpfs_doc.matched > 0
     msg: >-
       No GPFS docs (gpfs.docs) RPM found:
-      /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/gpfs.docs-*.noarch.rpm
+      {{ scale_install_localpkg_path }}/gpfs.docs-*.noarch.rpm
 
 #
 # Find GPFS gpfs.msg.en_US
 #
 - name: install | Find gpfs.msg.en_US (gpfs.msg.en_US) RPM
   find:
-    paths: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/
+    paths: "{{ scale_install_localpkg_path }}"
     patterns: gpfs.msg.en_US-*.noarch.rpm
   register: scale_install_gpfs_msg
 
@@ -157,14 +157,14 @@
     that: scale_install_gpfs_msg.matched > 0
     msg: >-
       No GPFS BASE (gpfs.base) RPM found:
-      /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/gpfs.msg.en_US-*.noarch.rpm
+      {{ scale_install_localpkg_path }}/gpfs.msg.en_US-*.noarch.rpm
 
 #
 # Find GPFS gpfs.compression
 #
 - name: install | Find GPFS Compression (gpfs.compression) RPM
   find:
-    paths: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/
+    paths: "{{ scale_install_localpkg_path }}"
     patterns: gpfs.compression-*.{{ scale_architecture }}.rpm
   register: scale_install_gpfs_compression
 
@@ -173,14 +173,14 @@
     that: scale_install_gpfs_compression.matched > 0
     msg: >-
       No GPFS Compression (gpfs.compression) RPM found:
-      /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/gpfs.compression-*.{{ scale_architecture }}.rpm
+      {{ scale_install_localpkg_path }}/gpfs.compression-*.{{ scale_architecture }}.rpm
 
 #
 # Find GSKit
 #
 - name: install | Find Global Security Kit (GSKit) RPM
   find:
-    paths: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/
+    paths: "{{ scale_install_localpkg_path }}"
     patterns: gpfs.gskit-*.{{ scale_architecture }}.rpm
   register: scale_install_gpfs_gskit
 
@@ -189,14 +189,14 @@
     that: scale_install_gpfs_gskit.matched > 0
     msg: >-
       No Global Security Kit (GSKit) RPM found:
-      /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/gpfs.gskit-*.{{ scale_architecture }}.rpm
+      {{ scale_install_localpkg_path }}/gpfs.gskit-*.{{ scale_architecture }}.rpm
 
 #
 # Add GPFS RPMs
 #
 - name: install | Add GPFS RPMs to list
   vars:
-    current_rpm: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/{{ item }}.rpm
+    current_rpm: "{{ scale_install_localpkg_path }}/{{ item }}.rpm"
   set_fact:
     scale_install_all_rpms: "{{ scale_install_all_rpms + [ current_rpm ] }}"
   with_items:
@@ -208,7 +208,7 @@
 
 - name: install | Add GPFS RPMs to list (prior to version 5.0.2.0)
   vars:
-    current_rpm: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/{{ item }}.rpm
+    current_rpm: ""{{ scale_install_localpkg_path }}/{{ item }}.rpm"
   set_fact:
     scale_install_all_rpms: "{{ scale_install_all_rpms + [ current_rpm ] }}"
   with_items:
@@ -221,7 +221,7 @@
 
 - name: install | Find GPFS gpl (gpfs.gpl) RPM
   find:
-    paths: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/
+    paths: "{{ scale_install_localpkg_path }}"
     patterns: gpfs.gpl-*.noarch.rpm
   register: scale_install_gpfs_gpl
 
@@ -230,11 +230,11 @@
     that: scale_install_gpfs_gpl.matched > 0
     msg: >-
       No GPFS GPL (gpfs.gpl) RPM found:
-      /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/gpfs.gpl-*.noarch.rpm
+      {{ scale_install_localpkg_path }}/gpfs.gpl-*.noarch.rpm
 
 - name: install | Add GPFS RPMs for building GPL module from source to list
   vars:
-    current_rpm: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/{{ item }}.rpm
+    current_rpm: "{{ scale_install_localpkg_path }}/{{ item }}.rpm"
   set_fact:
     scale_install_all_rpms: "{{ scale_install_all_rpms + [ current_rpm ] }}"
   when: scale_install_gplbin_rpm is undefined

@@ -4,7 +4,11 @@
   debug:
     msg: "Welcome to yum!"
 
+- name: set the pkgdir fact
+  - set_fact:
+     scale_install_gpfs_pkgdir_name: "{{ gpfs_path }}/gpfs_rpms"
+
 - name: install | Stat extracted packages
   stat:
-    path: "{{ gpfs_path }}/gpfs_rpms"
+    path: "{{ scale_install_gpfs_pkgdir_name }}"
   register: scale_install_gpfs_pkgdir
