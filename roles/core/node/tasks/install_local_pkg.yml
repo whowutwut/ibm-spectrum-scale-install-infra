@@ -52,9 +52,9 @@
   include: apt.yml
   when: ansible_distribution == 'Debian'
 
-- name: print out the pkgdir 
+- name: print out the pkgdir name
   debug:
-    msg: "{{ scale_install_gpfs_pkgdir }}"
+    msg: "{{ scale_install_gpfs_pkgdir_name }}"
 
 - block:  ## when: not scale_install_gpfs_pkgdir.stat.exists
     - name: install | Stat temporary directory
