@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    scale_version: "{{ lookup('env', 'MY_SCALE_VERSION') }}"
   tasks:
     - name: "Include cluster"
       include_role:
