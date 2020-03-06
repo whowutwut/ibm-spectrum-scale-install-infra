@@ -54,10 +54,10 @@
 
 - name: install | Stat extracted packages
   stat:
-    path: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms
+    path: "{{ gpfs_path }}/gpfs_rpms"
   register: scale_install_gpfs_rpmdir
 
-- block:  ## when: not scale_install_gpfs_rpmdir.stat.exists
+- bl ock:  ## when: not scale_install_gpfs_rpmdir.stat.exists
     - name: install | Stat temporary directory
       stat:
         path: "{{ scale_install_localpkg_tmpdir_path }}"
