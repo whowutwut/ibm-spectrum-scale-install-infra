@@ -20,4 +20,4 @@
 
 - name: Set scale_architecture to deb_arch
   set_fact:
-    scale_architecture: "{{ deb_architecture.stdout }}"
+    scale_architecture: "{{ deb_arch.stdout }}"
