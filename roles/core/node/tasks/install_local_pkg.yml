@@ -88,10 +88,14 @@
   args:
     creates: "{{ scale_install_localpkg_path }}"
 
-- name: install | Stat extracted packages
+- name: "install | Stat extracted packages here: {{ scale_install_gpfs_pkgdir_name }}"
   stat:
     path: "{{ scale_install_gpfs_pkgdir_name }}"
   register: scale_install_gpfs_pkgdir
+
+- name: DEBUG print out the stat results
+  debug:
+    msg: "{{ scale_install_gpfs_pkgdir }}"
 
 - name: install | Check extracted packages
   assert:
