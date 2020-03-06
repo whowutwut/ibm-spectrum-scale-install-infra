@@ -122,7 +122,7 @@
 - name: install | Find GPFS BASE (gpfs.base) Packages
   find:
     paths: "{{ scale_install_gpfs_pkgdir_name }}"
-    patterns: gpfs.base*.{{ scale_architecture }}*
+    patterns: gpfs.base*{{ scale_architecture }}*
   register: scale_install_gpfs_base
 
 - name: VKHU_DEBUG - print the pkg name.. 
