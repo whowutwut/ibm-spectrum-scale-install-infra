@@ -43,7 +43,7 @@
 - name: "print ansible_distribution" 
   debug:
     msg: "{{ ansible_distribution }}"
-    
+
 - name: "install | Set variables based on yum-based OS"
   include: yum.yml
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
@@ -106,10 +106,11 @@
 #
 # Delete installation package
 #
-- name: install | Delete installation package from node
-  file:
-    path: "{{ scale_install_localpkg_tmpdir_path + '/' + scale_install_localpkg_path | basename }}"
-    state: absent
+# VKHU_DEBUG - uncomment this later , undo...
+# - name: install | Delete installation package from node
+#   file:
+#     path: "{{ scale_install_localpkg_tmpdir_path + '/' + scale_install_localpkg_path | basename }}"
+#     state: absent
 
 #
 # Find GPFS BASE
