@@ -3,6 +3,7 @@
   hosts: all
   vars:
     scale_version: "{{ lookup('env', 'MY_SCALE_VERSION') }}"
+    scale_install_localpkg_path: "/root/Spectrum_Scale_Advanced-5.0.4.0-x86_64-Linux-install"
   tasks:
     - name: "Include precheck roles"
       include_role:
