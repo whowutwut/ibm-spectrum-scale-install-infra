@@ -88,14 +88,14 @@
   args:
     creates: "{{ scale_install_localpkg_path }}"
 
-- name: "install | Stat extracted packages here: {{ scale_install_gpfs_pkgdir_name }}"
+- name: install | Stat extracted packages
   stat:
     path: "{{ scale_install_gpfs_pkgdir_name }}"
   register: scale_install_gpfs_pkgdir
 
-- name: DEBUG print out the stat results
+- name: DEBUG print out the path
   debug:
-    msg: "{{ scale_install_gpfs_pkgdir }}"
+    msg: "{{ scale_install_gpfs_pkgdir }}.stat.path"
 
 - name: install | Check extracted packages
   assert:
@@ -118,10 +118,10 @@
 #
 # Find GPFS BASE
 #
-- name: install | Find GPFS BASE (gpfs.base) RPM
+- name: install | Find GPFS BASE (gpfs.base) Packages
   find:
     paths: "{{ scale_install_gpfs_pkgdir_name }}"
-    patterns: gpfs.base-*.{{ scale_architecture }}.rpm
+    patterns: gpfs.base-*.{{ scale_architecture }}*
   register: scale_install_gpfs_base
 
 - name: install | Check valid GPFS BASE (gpfs.base) RPM
@@ -129,7 +129,7 @@
     that: scale_install_gpfs_base.matched > 0
     msg: >-
       No GPFS BASE (gpfs.base) RPM found:
-      {{ scale_install_localpkg_path }}/gpfs.base-*.{{ scale_architecture }}.rpm
+      {{ scale_install_localpkg_path }}/gpfs.base-*.{{ scale_architecture }}.*
 
 #
 # Find GPFS gpfs.docs
