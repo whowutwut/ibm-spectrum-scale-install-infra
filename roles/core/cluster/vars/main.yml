@@ -1,1 +1,2 @@
-../../common/vars/main.yml
+---
+# vars file for cluster
