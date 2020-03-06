@@ -42,6 +42,11 @@
   set_fact:
     scale_install_all_rpms: []
 
+# VKHU - duplicate this one until I'm read for search/replace of the above
+- name: install | Initialize list of Packages
+  set_fact:
+    scale_install_all_pkgs: []
+
 - name: install | Initialize license list of RPMs
   set_fact:
     scale_install_license_rpms: []
