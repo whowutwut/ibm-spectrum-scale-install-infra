@@ -131,6 +131,9 @@
       No GPFS BASE (gpfs.base) RPM found:
       {{ scale_install_localpkg_path }}/gpfs.base-*.{{ scale_architecture }}.*
 
+- name: VKHU_DEBUG - print the pkg
+  debug:
+    msg: "{{ scale_install_gpfs_base }}"
 #
 # Find GPFS gpfs.docs
 #
