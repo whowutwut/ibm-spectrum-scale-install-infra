@@ -1,0 +1,5 @@
+---
+
+- name: "Welcome to apt"
+  debug:
+    msg: "Welcome to apt!"
