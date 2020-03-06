@@ -3,3 +3,8 @@
 - name: "Welcome to apt"
   debug:
     msg: "Welcome to apt!"
+
+- name: install | Stat extracted packages
+  stat:
+    path: "{{ gpfs_path }}/gpfs_debs"
+  register: scale_install_gpfs_pkgdir

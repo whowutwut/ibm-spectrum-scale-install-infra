@@ -3,3 +3,8 @@
 - name: "Welcome to yum"
   debug:
     msg: "Welcome to yum!"
+
+- name: install | Stat extracted packages
+  stat:
+    path: "{{ gpfs_path }}/gpfs_rpms"
+  register: scale_install_gpfs_pkgdir
