@@ -5,6 +5,7 @@
   package:
     name:
       - tar
+      - which
     state: latest
 
 - import_tasks: prepare.yml
