@@ -121,7 +121,7 @@
 - name: install | Find GPFS BASE (gpfs.base) Packages
   find:
     paths: "{{ scale_install_gpfs_pkgdir_name }}"
-    patterns: gpfs.base-*.{{ scale_architecture }}*
+    patterns: gpfs.base*.{{ scale_architecture }}*
   register: scale_install_gpfs_base
 
 - name: VKHU_DEBUG - print the pkg name.. 
@@ -153,13 +153,13 @@
 #
 # Find GPFS gpfs.msg.en_US
 #
-- name: install | Find gpfs.msg.en_US (gpfs.msg.en_US) Packages
+- name: install | Find GPFS msg (gpfs.msg.en) Packages
   find:
     paths: "{{ scale_install_gpfs_pkgdir_name }}"
-    patterns: gpfs.msg.en-*
+    patterns: gpfs.msg.en*
   register: scale_install_gpfs_msg
 
-- name: install | Check valid GPFS (gpfs.msg.en_US) Packages
+- name: install | Check valid GPFS msg (gpfs.msg.en) Packages
   assert:
     that: scale_install_gpfs_msg.matched > 0
     msg: >-
