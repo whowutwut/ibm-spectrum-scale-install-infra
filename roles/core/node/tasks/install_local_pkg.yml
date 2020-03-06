@@ -40,10 +40,6 @@
 #
 # Copy installation package
 #
-- name: "print ansible_distribution" 
-  debug:
-    msg: "{{ ansible_distribution }} and {{ ansible_distribution_major_version }}"
-
 - name: "install | Set variables based on yum-based OS"
   include: yum.yml
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
@@ -52,9 +48,14 @@
   include: apt.yml
   when: ansible_distribution == 'Debian'
 
-- name: print out the pkgdir name
+- name: VKHU_DEBUG print out scale_architecture
   debug:
-    msg: "{{ scale_install_gpfs_pkgdir_name }}"
+    msg: "{{ scale_architecture }}"
+
+- name: VKHU_DEBUG print ansible_distribution
+  debug:
+    msg: "{{ ansible_distribution }} and {{ ansible_distribution_major_version }}"
+
 
 - block:  ## when: not scale_install_gpfs_pkgdir.stat.exists
     - name: install | Stat temporary directory
