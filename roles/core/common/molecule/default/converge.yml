@@ -4,6 +4,7 @@
   vars:
     scale_version: "{{ lookup('env', 'MY_SCALE_VERSION') }}"
   tasks:
-    - name: "Include cluster"
+    - name: "Include dependency roles"
       include_role:
-        name: "cluster"
+        - name: "precheck"
+        - name: "node"
