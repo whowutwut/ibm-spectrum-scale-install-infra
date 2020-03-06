@@ -227,7 +227,7 @@
 - name: install | Find GPFS gpl (gpfs.gpl) Package
   find:
     paths: "{{ scale_install_gpfs_pkgdir_name }}"
-    patterns: gpfs.gpl-*
+    patterns: gpfs.gpl*
   register: scale_install_gpfs_gpl
 
 - name: install | Check valid GPFS GPL (gpfs.gpl) Package
