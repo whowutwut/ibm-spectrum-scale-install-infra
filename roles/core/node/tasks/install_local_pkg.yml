@@ -46,7 +46,7 @@
 
 - name: "install | set variables based on debian"
   include: apt.yml
-  when: ansible_distribution == 'Ubuntu
+  when: ansible_distribution == 'Ubuntu'
 
 - name: install | Stat extracted packages
   stat:
