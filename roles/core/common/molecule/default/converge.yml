@@ -6,7 +6,7 @@
   tasks:
     - name: "Include precheck roles"
       include_role:
-        - name: "precheck"
+        name: "precheck"
     - name: "Include node role" 
       include_role:
-        - name: "node"
+        name: "node"
