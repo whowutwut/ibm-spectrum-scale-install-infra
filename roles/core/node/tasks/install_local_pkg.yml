@@ -208,7 +208,7 @@
 
 - name: install | Add GPFS RPMs to list (prior to version 5.0.2.0)
   vars:
-    current_rpm: ""{{ scale_install_localpkg_path }}/{{ item }}.rpm"
+    current_rpm: "{{ scale_install_localpkg_path }}/{{ item }}.rpm"
   set_fact:
     scale_install_all_rpms: "{{ scale_install_all_rpms + [ current_rpm ] }}"
   with_items:
