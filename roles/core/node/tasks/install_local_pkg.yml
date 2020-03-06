@@ -2,7 +2,7 @@
 # Local package installation method
 
 - block:  ## run_once: true
-    - name: install | Stat local installation package
+    - name: "install | Check if local installation package exists in:  {{ scale_install_localpkg_path }}"
       stat:
         path: "{{ scale_install_localpkg_path }}"
       register: scale_install_localpkg
@@ -236,3 +236,6 @@
   when: scale_install_gplbin_rpm is undefined
   with_items: "{{ scale_install_gpfs_gpl.files.0.path | basename | regex_replace('\\.rpm$', '') }}"
 
+- name: VKHU_DEBUG - print out all RPMs
+  debug:
+    msg: "{{ scale_install_all_rpms }}"
