@@ -40,6 +40,10 @@
 #
 # Copy installation package
 #
+- name: "print ansible_distribution" 
+  debug:
+    msg: "{{ ansible_distribution }}"
+    
 - name: "install | Set variables based on yum-based OS"
   include: yum.yml
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
