@@ -47,9 +47,9 @@
   set_fact:
     scale_install_all_pkgs: []
 
-- name: install | Initialize license list of RPMs
+- name: install | Initialize license list of Packages
   set_fact:
-    scale_install_license_rpms: []
+    scale_install_license_pkgs: []
 
 - include_tasks: install_{{ scale_installmethod }}.yml
 
