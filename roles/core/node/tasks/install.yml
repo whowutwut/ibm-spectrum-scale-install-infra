@@ -91,7 +91,7 @@
 
     - name: install | Install GPFS License RPMs
       yum:
-        name: "{{ scale_install_license_rpms }}"
+        name: "{{ scale_install_license_pkgs }}"
         state: present
       register: scale_install_license_rpmresult
       when: ansible_pkg_mgr == 'yum'
