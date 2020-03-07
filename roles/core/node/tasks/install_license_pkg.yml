@@ -36,7 +36,7 @@
 - name: install | Find GPFS Advance (gpfs.adv) Package
   find:
     paths: "{{ scale_install_gpfs_pkgdir_name }}"
-    patterns: gpfs.adv*.{{ scale_architecture }}*
+    patterns: gpfs.adv*{{ scale_architecture }}*
   register: scale_install_gpfs_adv
   when: '"gpfs.license.std" not in scale_gpfs_license_pkg'
 
@@ -47,7 +47,7 @@
 - name: install | Find GPFS crypto (gpfs.crypto) Package
   find:
     paths: "{{ scale_install_gpfs_pkgdir_name }}"
-    patterns: gpfs.crypto*.{{ scale_architecture }}*
+    patterns: gpfs.crypto*{{ scale_architecture }}*
   register: scale_install_gpfs_crypto
   when: '"gpfs.license.std" not in scale_gpfs_license_pkg'
 
