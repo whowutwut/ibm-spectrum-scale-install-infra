@@ -20,9 +20,11 @@
   block:
     - name: install | Install GPFS DPKGs
       apt:
-        deb: [ "{{ scale_install_all_pkgs }}" ]
+        name: "{{ item | basename }}"
         state: present
       register: scale_install_result
+      with_items:
+        - "{{ scale_install_all_pkgs }}"
       
     - name: install | Install GPFS License DPKGs
       apt:
