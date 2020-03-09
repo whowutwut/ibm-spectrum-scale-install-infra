@@ -3,9 +3,12 @@
 
 - name: Install dependencies  (VKHU_DEBUG - Should this be somewhere else?)
   apt:
-    name: software-properties-common
+    name: "{{ item }}"
     state: present
-    
+  with_items: 
+    - local-apt-repository
+    - software-properties-common
+
 - name: Print install welcome msg
   debug:
      msg: "Installing for apt based platforms ..."
@@ -29,7 +32,7 @@
     - "{{ scale_install_all_pkgs }}"
 
 - name: "Add local repository {{ scale_install_gpfs_pkgdir_name }}"
-  apt_repo:
+  apt_repository:
     repo: "copy://{{ scale_install_gpfs_pkgdir_name }}"
     state: present
     update: yes
