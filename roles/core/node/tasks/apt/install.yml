@@ -1,0 +1,6 @@
+---
+# Install the packages for apt based OS
+
+- name: Print install welcome msg
+  debug:
+     msg: "Installing for apt based platforms ..."

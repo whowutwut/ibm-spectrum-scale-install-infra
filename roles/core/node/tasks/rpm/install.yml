@@ -1,0 +1,6 @@
+---
+# Install the packages for rpm based OS
+
+- name: Print install welcome msg
+  debug:
+     msg: "Installing for rpm based platforms ..."
