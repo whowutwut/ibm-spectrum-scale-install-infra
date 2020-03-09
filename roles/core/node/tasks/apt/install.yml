@@ -12,6 +12,16 @@
 - name: printing - scale_install_license_pkgs
   debug:
     msg: "{{ scale_install_license_pkgs }}"
+
+- name: build up a new pkglist based on the 
+  set_fact:
+     local_all_pkgs: "{{ local_all_pkgs }} + [ '{{ item | basename }}' ]"
+  with_items:
+    - " {{ scale_install_license_pkgs }}"
+  
+- name: VKHU_DEBUG print out new pkglist
+  debug:
+    msg: "{{ local_all_pkgs }}"
     
 #
 # Install or update GPFS packages
@@ -20,11 +30,9 @@
   block:
     - name: install | Install GPFS DPKGs
       apt:
-        name: "{{ item | basename }}"
+        name: "{{ local_all_pkgs }}"
         state: present
       register: scale_install_result
-      with_items:
-        - "{{ scale_install_all_pkgs }}"
       
     - name: install | Install GPFS License DPKGs
       apt:
