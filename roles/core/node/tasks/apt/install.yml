@@ -20,13 +20,13 @@
   block:
     - name: install | Install GPFS DPKGs
       apt:
-        deb: "/usr/lpp/mmfs/5.0.4.0/gpfs_debs/gpfs.base_5.0.4-0_amd64.deb"
+        deb: [ "{{ scale_install_all_pkgs }}" ]
         state: present
       register: scale_install_result
       
     - name: install | Install GPFS License DPKGs
       apt:
-        deb: "{{ scale_install_license_pkgs }}"
+        deb: [ "{{ scale_install_license_pkgs }}" ]
         state: present
       register: scale_install_license_result
 
