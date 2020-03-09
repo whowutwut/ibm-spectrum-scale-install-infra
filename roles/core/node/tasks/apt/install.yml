@@ -17,11 +17,17 @@
   set_fact:
     local_all_pkgs: []
 
+- name: print out with_items
+  debug:
+    msg: "The item: {{ item | basename }}"
+  with_items:
+    - "{{ scale_install_all_pkgs }}"
+
 - name: build up a new pkglist based on the 
   set_fact:
      local_all_pkgs: "{{ local_all_pkgs }} + [ '{{ item | basename }}' ]"
   with_items:
-    - " {{ scale_install_all_pkgs }}"
+    - "{{ scale_install_all_pkgs }}"
   
 - name: VKHU_DEBUG print out new pkglist
   debug: 
