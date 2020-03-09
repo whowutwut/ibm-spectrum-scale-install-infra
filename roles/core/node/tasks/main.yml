@@ -8,7 +8,7 @@
   tags: build
   when: ansible_distribution == 'Debian'
 
-- import_tasks: yum/build.yml
+- import_tasks: rpm/build.yml
   tags: build
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
