@@ -7,8 +7,8 @@ platforms:
   - name: centos7
     image: docker.io/pycontribs/centos:7
     pre_build_image: true
-  - name: debian
-    image: docker.io/pycontribs/debian
+  - name: ubuntu
+    image: docker.io/pycontribs/ubuntu
     pre_build_image: true
 provisioner:
   name: ansible
