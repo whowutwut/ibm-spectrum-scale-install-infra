@@ -31,11 +31,11 @@
   with_items:
     - "{{ scale_install_all_pkgs }}"
 
-- name: "Add local repository {{ scale_install_gpfs_pkgdir_name }}"
-  apt_repository:
-    repo: "ppa:{{ scale_install_gpfs_pkgdir_name }}"
-    state: present
-    update: yes
+# - name: "Add local repository {{ scale_install_gpfs_pkgdir_name }}"
+#   apt_repository:
+#     repo: "ppa:{{ scale_install_gpfs_pkgdir_name }}"
+#     state: present
+#     update: yes
 
 - name: build up a new pkglist based on the 
   set_fact:
