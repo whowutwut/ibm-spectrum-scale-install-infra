@@ -21,11 +21,11 @@
   set_fact:
      local_all_pkgs: "{{ local_all_pkgs }} + [ '{{ item | basename }}' ]"
   with_items:
-    - " {{ scale_install_license_pkgs }}"
+    - " {{ scale_install_all_pkgs }}"
   
 - name: VKHU_DEBUG print out new pkglist
-  debug:
-    msg: "{{ local_all_pkgs }}"
+  debug: 
+    var: local_all_pkgs
     
 #
 # Install or update GPFS packages
