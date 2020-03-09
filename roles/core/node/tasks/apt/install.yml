@@ -33,7 +33,7 @@
 
 - name: "Add local repository {{ scale_install_gpfs_pkgdir_name }}"
   apt_repository:
-    repo: "copy://{{ scale_install_gpfs_pkgdir_name }}"
+    repo: "ppa:{{ scale_install_gpfs_pkgdir_name }}"
     state: present
     update: yes
 
