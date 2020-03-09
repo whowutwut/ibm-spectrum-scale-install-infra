@@ -4,3 +4,28 @@
 - name: Print install welcome msg
   debug:
      msg: "Installing for apt based platforms ..."
+
+#
+# Install or update GPFS packages
+#
+- name: Install the GPFS packages
+  block:
+    - name: install | Install GPFS RPMs
+      apt:
+        name: "{{ scale_install_all_pkgs }}"
+        state: present
+      register: scale_install_result
+
+    - name: install | Install GPFS License RPMs
+      apt:
+        name: "{{ scale_install_license_pkgs }}"
+        state: present
+      register: scale_install_license_result
+  
+    - name: install | Check if GPFS packages were updated
+      set_fact:
+        scale_install_updated: true
+      when:
+        - (scale_install_result.changed) 
+        #- (scale_install_license_result.changed) or (scale_install_license_dnfresult.changed)
+  when: not scale_daemon_running
