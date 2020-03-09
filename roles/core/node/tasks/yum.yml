@@ -4,6 +4,14 @@
   debug:
     msg: "Welcome to yum!"
 
+- name: Install dependencies  (VKHU_DEBUG - Should this be somewhere else?)
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - which
+    - tar
+
 - name: set the pkgdir fact
   set_fact:
      scale_install_gpfs_pkgdir_name: "{{ gpfs_path }}/gpfs_rpms"
