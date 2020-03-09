@@ -5,22 +5,33 @@
   debug:
      msg: "Installing for apt based platforms ..."
 
+- name: printing - scale_install_all_pkgs
+  debug:
+    msg: "{{ scale_install_all_pkgs }}"
+    
+- name: printing - scale_install_license_pkgs
+  debug:
+    msg: "{{ scale_install_license_pkgs }}"
+    
 #
 # Install or update GPFS packages
 #
 - name: Install the GPFS packages
   block:
-    - name: install | Install GPFS RPMs
+    - name: install | Install GPFS DPKGs
       apt:
-        name: "{{ scale_install_all_pkgs }}"
+        name: "{{ item }}"
         state: present
       register: scale_install_result
-
-    - name: install | Install GPFS License RPMs
+      with_items:
+        - "{{ scale_install_all_pkgs }}"
+      
+    - name: install | Install GPFS License DPKGs
       apt:
         name: "{{ scale_install_license_pkgs }}"
         state: present
       register: scale_install_license_result
+
   
     - name: install | Check if GPFS packages were updated
       set_fact:
