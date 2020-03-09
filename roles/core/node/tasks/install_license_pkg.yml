@@ -69,7 +69,7 @@
 - name: install | Add GPFS Dependent License RPMs to list
   vars:
     license_pkg: "{{ scale_install_gpfs_license.files.0.path | basename }}"
-    current_pkg: /usr/lpp/mmfs/{{ scale_version }}/gpfs_rpms/{{ item }}.rpm
+    current_pkg: "{{ scale_install_gpfs_pkgdir_name }}/{{ item }}"
   set_fact:
     scale_install_license_pkgs: "{{ scale_install_license_pkgs + [ current_pkg ] }}"
   with_items:
