@@ -13,6 +13,6 @@ platforms:
 provisioner:
   name: ansible
   env:
-    MY_SCALE_VERSION: '${SCALE_VERSION:-"4.1.1"}'
+    MY_SCALE_VERSION: '${SCALE_VERSION:-"4.1.1.0"}'
 verifier:
   name: ansible
