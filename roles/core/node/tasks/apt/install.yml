@@ -8,6 +8,8 @@
   with_items: 
     - local-apt-repository
     - software-properties-common
+    - reprepro
+    - dpkg-dev
 
 - name: Print install welcome msg
   debug:
