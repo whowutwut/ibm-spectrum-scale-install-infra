@@ -6,7 +6,7 @@
 
 - import_tasks: apt/build.yml
   tags: build
-  when: ansible_distribution == 'Debian'
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - import_tasks: rpm/build.yml
   tags: build

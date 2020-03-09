@@ -44,9 +44,9 @@
   include: yum.yml
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
 
-- name: "install | set variables based on Debian"
+- name: "install | set variables based on Ubuntu/Debian"
   include: apt.yml
-  when: ansible_distribution == 'Debian'
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
 - name: VKHU_DEBUG print out scale_architecture
   debug:
