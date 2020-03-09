@@ -49,6 +49,13 @@
   debug: 
     var: local_all_pkgs
     
+- name: get directory ls
+  command: "ls /usr/lpp/mmfs/5.0.4.0/gpfs_debs/"
+  register: dir_out
+
+- name: print
+  debug: var={{item}}
+  with_items: dir_out.stdout_lines
 #
 # Install or update GPFS packages
 #
@@ -56,7 +63,8 @@
   block:
     - name: install | Install GPFS DPKGs
       apt:
-        name: "{{ local_all_pkgs }}"
+        #name: "{{ local_all_pkgs }}"
+        name: " {{ scale_install_all_pkgs }}"
         state: present
       register: scale_install_result
       
