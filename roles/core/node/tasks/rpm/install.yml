@@ -5,7 +5,14 @@
   debug:
      msg: "Installing for rpm based platforms ..."
 
-
+- name: Install dependencies  (VKHU_DEBUG - Should this be somewhere else?)
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - which
+    - tar
+    
 #
 # Install or update RPMs
 #
