@@ -13,6 +13,10 @@
   debug:
     msg: "{{ scale_install_license_pkgs }}"
 
+- name: install | Initialize local list
+  set_fact:
+    local_all_pkgs: []
+
 - name: build up a new pkglist based on the 
   set_fact:
      local_all_pkgs: "{{ local_all_pkgs }} + [ '{{ item | basename }}' ]"
