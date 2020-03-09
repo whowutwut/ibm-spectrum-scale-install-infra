@@ -20,19 +20,16 @@
   block:
     - name: install | Install GPFS DPKGs
       apt:
-        name: "{{ item }}"
+        pkg: "{{ scale_install_all_pkgs }}"
         state: present
       register: scale_install_result
-      with_items:
-        - "{{ scale_install_all_pkgs }}"
       
     - name: install | Install GPFS License DPKGs
       apt:
-        name: "{{ scale_install_license_pkgs }}"
+        pkg: "{{ scale_install_license_pkgs }}"
         state: present
       register: scale_install_license_result
 
-  
     - name: install | Check if GPFS packages were updated
       set_fact:
         scale_install_updated: true
