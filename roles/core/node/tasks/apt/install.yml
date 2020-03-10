@@ -67,11 +67,19 @@
         state: present
       register: scale_install_result
       
-    - name: install | Install GPFS License DPKGs
-      apt:
-        deb: [ "{{ scale_install_license_pkgs }}" ]
-        state: present
-      register: scale_install_license_result
+    # - name: install | Install GPFS License DPKGs
+    #   apt:
+    #     deb: [ "{{ scale_install_license_pkgs }}" ]
+    #     state: present
+    #   register: scale_install_license_result
+
+    # VKHU_DEBUG - HACK 
+    - name: install the packages one by one (hack) 
+      command: "dpkg -i {{ item }}"
+      args:
+        chdir: "{{ scale_install_gpfs_pkgdir_name }}"
+      with_items:
+        - "{{ local_all_pkgs }}"
 
     - name: install | Check if GPFS packages were updated
       set_fact:
