@@ -9,7 +9,8 @@
     list: gpfs.license.*
   register: package_name_version
 
-- debug:
+- name: install | Print the result from installing the license package
+  debug:
     msg: "{{ package_name_version.results }}"
 
 - name: install | Check valid only one GPFS License (gpfs.license) RPM
