@@ -1,7 +1,7 @@
 ---
 # Build Linux kernel extension from source
 
-# VKHU_DEBUG - NEW
+# VKHU_DEBUG - HACK, need a better way before this is checked in
 - name: set fact - set molecule to true
   set_fact:
     molecule: true
