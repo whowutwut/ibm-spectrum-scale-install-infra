@@ -91,20 +91,21 @@
     - name: install | Stat extracted packages
       stat:
         path: "{{ scale_install_gpfs_pkgdir_name }}"
-      register: scale_install_gpfs_pkgdir
+      register: scale_install_gpfs_pkgdir_new
 
-    - name: DEBUG print out the path
-      debug:
-        msg: "{{ scale_install_gpfs_pkgdir }}.stat.path"
 
     - name: install | Check extracted packages
       assert:
         that:
-          - scale_install_gpfs_pkgdir.stat.exists
-          - scale_install_gpfs_pkgdir.stat.isdir
+          - scale_install_gpfs_pkgdir_new.stat.exists
+          - scale_install_gpfs_pkgdir_new.stat.isdir
         msg: >-
           The variable 'scale_version' doesn't seem to match the contents of the
           local installation package!
+
+    - name: DEBUG print out the path
+      debug:
+        msg: "{{ scale_install_gpfs_pkgdir_new }}.stat.path"
 
     #
     # Delete installation package
