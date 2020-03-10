@@ -1,0 +1,32 @@
+---
+# Build Linux kernel extension from source for apt based OS
+
+- block:
+    #
+    # Install gplsrc prereqs
+    #
+    - name: build-apt | Install prereqs for building GPL module from source
+      apt:
+        name: "{{ scale_build_gplsrc_prereqs_apt }}"
+        state: present
+
+    #
+    # Build kernel extension
+    #
+    - name: build-apt | Compile GPL module
+      shell: /usr/lpp/mmfs/bin/mmbuildgpl --quiet
+      args:
+        creates: /lib/modules/{{ ansible_kernel }}/extra/mmfs26.ko
+
+    - name: build-apt | Stat GPL module
+      stat:
+        path: /lib/modules/{{ ansible_kernel }}/extra/mmfs26.ko
+      register: scale_build_kmod
+
+    - name: build-apt | Check GPL module
+      assert:
+        that: scale_build_kmod.stat.exists
+        msg: >-
+          Unable to build Linux kernel extension for running kernel
+          {{ ansible_kernel }}!
+  when: scale_install_gplbin_rpm is undefined

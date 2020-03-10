@@ -1,0 +1,20 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: centos7
+    image: docker.io/pycontribs/centos:7
+    pre_build_image: true
+  - name: ubuntu
+    image: docker.io/pycontribs/ubuntu
+    pre_build_image: true
+  - name: ubuntu1804
+    image: docker.io/ubuntu:18.04
+provisioner:
+  name: ansible
+  env:
+    MY_SCALE_VERSION: '${SCALE_VERSION:-"4.1.1.0"}'
+verifier:
+  name: ansible

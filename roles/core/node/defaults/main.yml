@@ -2,6 +2,8 @@
 # Default variables for the IBM Spectrum Scale (GPFS) role -
 # either edit this file or define your own variables to override the defaults
 
+mmfs_path: "/usr/lpp/mmfs"
+gpfs_path: "{{ mmfs_path }}/{{ scale_version }}"
 
 ## Specify the Spectrum Scale version that you want to install on your nodes
 #scale_version: 4.1.1.0
@@ -63,9 +65,16 @@ scale_install_gplbin_prereqs:
   - glibc-devel
 
 ## List of RPMs to install when building Linux kernel extension from source
-scale_build_gplsrc_prereqs:
+scale_build_gplsrc_prereqs_yum:
   - gcc-c++
   - kernel-devel
+  - make
+
+## List of RPMs to install when building Linux kernel extension from source
+scale_build_gplsrc_prereqs_apt:
+  - gcc
+  - g++
+  - linux-headers-generic
   - make
 
 ## List of RPMs to install specific to rhel8 when building Linux kernel extension from source

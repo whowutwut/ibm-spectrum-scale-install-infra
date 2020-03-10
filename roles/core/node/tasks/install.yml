@@ -4,7 +4,7 @@
 #
 # Choose installation method from configuration variables
 #
-- block:  ## run_once: true
+- block:
     - name: install | Check for repository installation method
       set_fact:
         scale_installmethod: repository
@@ -38,13 +38,11 @@
 #
 # Run chosen installation method to get list of RPMs
 #
-- name: install | Initialize list of RPMs
+- name: install | Initialize arrays to store packages during install
   set_fact:
     scale_install_all_rpms: []
-
-- name: install | Initialize license list of RPMs
-  set_fact:
-    scale_install_license_rpms: []
+    scale_install_all_pkgs: []
+    scale_install_license_pkgs: []
 
 - include_tasks: install_{{ scale_installmethod }}.yml
 
@@ -67,57 +65,10 @@
   when: scale_daemon_running | bool
 
 #
-# Install or update RPMs
+# Call the correct install.yml play based on the OS
 #
-- block:  ## when: not scale_daemon_running
-    - name: install | List installed GPFS RPMs
-      yum:
-        list: gpfs.base
-        disablerepo: spectrum-scale-gpfs
-      register: scale_install_rpmlist
-      when: ansible_pkg_mgr == 'yum'
+- import_tasks: apt/install.yml
+  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
-    - name: install | Install GPFS RPMs
-      yum:
-        name: "{{ scale_install_all_rpms }}"
-        state: present
-      register: scale_install_rpmresult
-      when: ansible_pkg_mgr == 'yum'
-
-    - name: install | Install GPFS License RPMs
-      yum:
-        name: "{{ scale_install_license_rpms }}"
-        state: present
-      register: scale_install_license_rpmresult
-      when: ansible_pkg_mgr == 'yum'
-
-    - name: install | List installed GPFS RPMs
-      dnf:
-        list: gpfs.base
-        disablerepo: spectrum-scale-gpfs
-      register: scale_install_dnfrpmlist
-      when: ansible_pkg_mgr == 'dnf'
-
-    - name: install | Install GPFS RPMs
-      dnf:
-        name: "{{ scale_install_all_rpms }}"
-        state: present
-      register: scale_install_dnfrpmresult
-      when: ansible_pkg_mgr == 'dnf'
-
-    - name: install | Install GPFS License RPMs
-      dnf:
-        name: "{{ scale_install_license_rpms }}"
-        state: present
-      register: scale_install_license_dnfrpmresult
-      when: ansible_pkg_mgr == 'dnf'
-
-    - name: install | Check if GPFS RPMs were updated
-      set_fact:
-        scale_install_updated: true
-      when:
-        - ("'installed' in scale_install_rpmlist.results | map(attribute='yumstate') | list") or
-          ("'installed' in scale_install_dnfrpmlist.results | map(attribute='yumstate' | list")
-        - (scale_install_rpmresult.changed) or (scale_install_dnfrpmresult.changed)
-        #- (scale_install_license_rpmresult.changed) or (scale_install_license_dnfrpmresult.changed)
-  when: not scale_daemon_running
+- import_tasks: yum/install.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'

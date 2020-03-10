@@ -1,0 +1,19 @@
+---
+- name: apt/set_vars | Set the pkgdir for debian based OS
+  set_fact:
+    scale_install_gpfs_pkgdir_name: "{{ gpfs_path }}/gpfs_debs"
+
+- name: apt/set_vars | | Stat extracted packages
+  stat:
+    path: "{{ scale_install_gpfs_pkgdir_name }}"
+  register: scale_install_gpfs_pkgdir
+
+- name: apt/set_vars | Get the debian architecture
+  shell: dpkg --print-architecture
+  register: deb_arch
+  changed_when: false
+
+# Use the debian architecture to set to scale_architecture, instaead of ansible_architecture
+- name: apt/set_vars | Set scale_architecture to debian architecture
+  set_fact:
+    scale_architecture: "{{ deb_arch.stdout }}"

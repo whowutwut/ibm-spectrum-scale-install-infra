@@ -1,0 +1,50 @@
+---
+# Install the packages for apt based OS
+
+- name: apt/install | Install dependency packages from the OS repository
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - local-apt-repository
+    - software-properties-common
+    - reprepro
+    - dpkg-dev
+    # GPFS.base dependencies
+    - ksh
+    - gawk
+    - iputils-ping
+    - libaio1
+    - python
+    - m4
+
+- name: apt/install | Initialize local list
+  set_fact:
+    local_all_pkgs: []
+
+- name: apt/install - Build up a package list based on the basename
+  set_fact:
+    local_all_pkgs: "{{ local_all_pkgs }} + [ '{{ item | basename }}' ]"
+  with_items:
+    - "{{ scale_install_all_pkgs }}"
+
+#
+# Install or update GPFS packages
+#
+- name: Install the GPFS packages
+  block:
+    # VKHU_DEBUG - HACK
+    - name: install the packages one by one (hack)
+      shell: "dpkg -i {{ item }}"
+      args:
+        chdir: "{{ scale_install_gpfs_pkgdir_name }}"
+      with_items:
+        - "{{ local_all_pkgs }}"
+      register: scale_install_result
+
+    - name: install | Check if GPFS packages were updated
+      set_fact:
+        scale_install_updated: true
+      when:
+        - (scale_install_result.changed)
+  when: not scale_daemon_running
