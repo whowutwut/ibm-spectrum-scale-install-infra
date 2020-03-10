@@ -1,9 +1,16 @@
 ---
 # Build Linux kernel extension from source
 
-# VKHU_DEBUG - NEW 
-- import_tasks: apt/build.yml
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+# VKHU_DEBUG - NEW
+- name: set fact - set molecule to true
+  set_fact:
+    molecule: true
 
-- import_tasks: rpm/build.yml
-  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+- name: Build only when requested
+  block:
+    - import_tasks: apt/build.yml
+      when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
+
+    - import_tasks: rpm/build.yml
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+  when: not molecule
