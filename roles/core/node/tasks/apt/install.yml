@@ -1,11 +1,15 @@
 ---
 # Install the packages for apt based OS
 
-- name: Install dependencies  (VKHU_DEBUG - Should this be somewhere else?)
+- name: Print install welcome msg
+  debug:
+    msg: "Enter apt/install.yml for APT based OS ..."
+
+- name: Install dependencies  (VKHU_DEBUG - TODO - this should move somewher else??)
   apt:
     name: "{{ item }}"
     state: present
-  with_items: 
+  with_items:
     - local-apt-repository
     - software-properties-common
     - reprepro
@@ -18,70 +22,23 @@
     - python
     - m4
 
-- name: Print install welcome msg
-  debug:
-     msg: "Installing for apt based platforms ..."
-
-- name: printing - scale_install_all_pkgs
-  debug:
-    msg: "{{ scale_install_all_pkgs }}"
-    
-- name: printing - scale_install_license_pkgs
-  debug:
-    msg: "{{ scale_install_license_pkgs }}"
-
-- name: install | Initialize local list
+- name: apt/install | Initialize local list
   set_fact:
     local_all_pkgs: []
 
-- name: print out with_items
-  debug:
-    msg: "The item: {{ item | basename }}"
-  with_items:
-    - "{{ scale_install_all_pkgs }}"
-
-# - name: "Add local repository {{ scale_install_gpfs_pkgdir_name }}"
-#   apt_repository:
-#     repo: "ppa:{{ scale_install_gpfs_pkgdir_name }}"
-#     state: present
-
-- name: build up a new pkglist based on the 
+- name: apt/install - Build up a package list based on the basename
   set_fact:
-     local_all_pkgs: "{{ local_all_pkgs }} + [ '{{ item | basename }}' ]"
+    local_all_pkgs: "{{ local_all_pkgs }} + [ '{{ item | basename }}' ]"
   with_items:
     - "{{ scale_install_all_pkgs }}"
-  
-- name: VKHU_DEBUG print out new pkglist
-  debug: 
-    var: local_all_pkgs
-    
-- name: get directory ls
-  command: "ls /usr/lpp/mmfs/5.0.4.0/gpfs_debs/"
-  register: dir_out
 
-- name: print
-  debug: var={{item}}
-  with_items: dir_out.stdout_lines
 #
 # Install or update GPFS packages
 #
 - name: Install the GPFS packages
   block:
-    # - name: install | Install GPFS DPKGs
-    #   apt:
-    #     #name: "{{ local_all_pkgs }}"
-    #     name: [ '{{ scale_install_all_pkgs }}' ]
-    #     state: present
-    #   register: scale_install_result
-      
-    # - name: install | Install GPFS License DPKGs
-    #   apt:
-    #     deb: [ "{{ scale_install_license_pkgs }}" ]
-    #     state: present
-    #   register: scale_install_license_result
-
-    # VKHU_DEBUG - HACK 
-    - name: install the packages one by one (hack) 
+    # VKHU_DEBUG - HACK
+    - name: install the packages one by one (hack)
       shell: "dpkg -i {{ item }}"
       args:
         chdir: "{{ scale_install_gpfs_pkgdir_name }}"
@@ -93,6 +50,5 @@
       set_fact:
         scale_install_updated: true
       when:
-        - (scale_install_result.changed) 
-        #- (scale_install_license_result.changed) or (scale_install_license_dnfresult.changed)
+        - (scale_install_result.changed)
   when: not scale_daemon_running
