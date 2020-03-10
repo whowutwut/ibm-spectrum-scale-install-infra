@@ -60,12 +60,12 @@
 #
 - name: Install the GPFS packages
   block:
-    - name: install | Install GPFS DPKGs
-      apt:
-        #name: "{{ local_all_pkgs }}"
-        name: [ '{{ scale_install_all_pkgs }}' ]
-        state: present
-      register: scale_install_result
+    # - name: install | Install GPFS DPKGs
+    #   apt:
+    #     #name: "{{ local_all_pkgs }}"
+    #     name: [ '{{ scale_install_all_pkgs }}' ]
+    #     state: present
+    #   register: scale_install_result
       
     # - name: install | Install GPFS License DPKGs
     #   apt:
@@ -75,7 +75,7 @@
 
     # VKHU_DEBUG - HACK 
     - name: install the packages one by one (hack) 
-      command: "dpkg -i {{ item }}"
+      shell: "dpkg -i {{ item }}"
       args:
         chdir: "{{ scale_install_gpfs_pkgdir_name }}"
       with_items:
