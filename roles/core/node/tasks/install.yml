@@ -38,17 +38,10 @@
 #
 # Run chosen installation method to get list of RPMs
 #
-- name: install | Initialize list of RPMs
+- name: install | Initialize arrays to store packages during install
   set_fact:
     scale_install_all_rpms: []
-
-# VKHU - duplicate this one until I'm read for search/replace of the above
-- name: install | Initialize list of Packages
-  set_fact:
     scale_install_all_pkgs: []
-
-- name: install | Initialize license list of Packages
-  set_fact:
     scale_install_license_pkgs: []
 
 - include_tasks: install_{{ scale_installmethod }}.yml
