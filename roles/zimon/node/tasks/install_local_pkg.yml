@@ -112,6 +112,11 @@
     zimon_url: 'zimon_debs/ubuntu16'
   when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version == '16'
 
+- name: install | set zimon path for Ubuntu 18
+  set_fact:
+    zimon_url: 'zimon_debs/ubuntu'
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version == '18'
+
 #
 # Find Zimon collector
 #
