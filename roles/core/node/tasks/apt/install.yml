@@ -87,6 +87,7 @@
         chdir: "{{ scale_install_gpfs_pkgdir_name }}"
       with_items:
         - "{{ local_all_pkgs }}"
+      register: scale_install_result
 
     - name: install | Check if GPFS packages were updated
       set_fact:
