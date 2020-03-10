@@ -1,12 +1,5 @@
 ---
 # Precheck IBM Spectrum Scale (GPFS)
 
-- name: install requires packages
-  package:
-    name:
-      - tar
-      # - which - doesn't work for ubuntu (debianutils)
-    state: latest
-
 - import_tasks: prepare.yml
   tags: prepare
