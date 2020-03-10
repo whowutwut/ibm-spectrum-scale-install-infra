@@ -77,45 +77,44 @@
         src: "{{ scale_install_localpkg_path }}"
         dest: "{{ scale_install_localpkg_tmpdir_path }}"
         mode: a+x
+  
+    #
+    # Extract installation package
+    #
+    - name: install | Extract installation package
+      vars:
+        localpkg: "{{ scale_install_localpkg_tmpdir_path + '/' + scale_install_localpkg_path | basename }}"
+      command: "{{ localpkg + ' --silent' }}"
+      args:
+        creates: "{{ scale_install_localpkg_path }}"
+
+    - name: install | Stat extracted packages
+      stat:
+        path: "{{ scale_install_gpfs_pkgdir_name }}"
+      register: scale_install_gpfs_pkgdir
+
+    - name: DEBUG print out the path
+      debug:
+        msg: "{{ scale_install_gpfs_pkgdir }}.stat.path"
+
+    - name: install | Check extracted packages
+      assert:
+        that:
+          - scale_install_gpfs_pkgdir.stat.exists
+          - scale_install_gpfs_pkgdir.stat.isdir
+        msg: >-
+          The variable 'scale_version' doesn't seem to match the contents of the
+          local installation package!
+
+    #
+    # Delete installation package
+    #
+    # VKHU_DEBUG - uncomment this later , undo...
+    - name: install | Delete installation package from node
+      file:
+        path: "{{ scale_install_localpkg_tmpdir_path + '/' + scale_install_localpkg_path | basename }}"
+        state: absent
   when: not scale_install_gpfs_pkgdir.stat.exists
-
-#
-# Extract installation package
-#
-- name: install | Extract installation package
-  vars:
-    localpkg: "{{ scale_install_localpkg_tmpdir_path + '/' + scale_install_localpkg_path | basename }}"
-  command: "{{ localpkg + ' --silent' }}"
-  args:
-    creates: "{{ scale_install_localpkg_path }}"
-
-- name: install | Stat extracted packages
-  stat:
-    path: "{{ scale_install_gpfs_pkgdir_name }}"
-  register: scale_install_gpfs_pkgdir
-
-- name: DEBUG print out the path
-  debug:
-    msg: "{{ scale_install_gpfs_pkgdir }}.stat.path"
-
-- name: install | Check extracted packages
-  assert:
-    that:
-      - scale_install_gpfs_pkgdir.stat.exists
-      - scale_install_gpfs_pkgdir.stat.isdir
-    msg: >-
-      The variable 'scale_version' doesn't seem to match the contents of the
-      local installation package!
-
-#
-# Delete installation package
-#
-# VKHU_DEBUG - uncomment this later , undo...
-# - name: install | Delete installation package from node
-#   file:
-#     path: "{{ scale_install_localpkg_tmpdir_path + '/' + scale_install_localpkg_path | basename }}"
-#     state: absent
-
 #
 # Find GPFS BASE
 #
