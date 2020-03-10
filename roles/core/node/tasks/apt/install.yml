@@ -10,6 +10,13 @@
     - software-properties-common
     - reprepro
     - dpkg-dev
+    # GPFS.base dependencies
+    - ksh
+    - gawk
+    - iputils-ping
+    - libaio1
+    - python
+    - m4
 
 - name: Print install welcome msg
   debug:
