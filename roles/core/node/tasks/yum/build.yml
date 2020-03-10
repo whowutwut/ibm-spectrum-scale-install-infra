@@ -1,10 +1,6 @@
 ---
 # Build Linux kernel extension from source for rpm based OS
 
-- name: Print welcome
-  debug:
-    msg: "Building GPL for rpm based platforms ..."
-
 - block:
     #
     # Install gplsrc prereqs
