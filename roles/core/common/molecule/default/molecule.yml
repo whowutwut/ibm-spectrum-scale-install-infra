@@ -10,6 +10,8 @@ platforms:
   - name: ubuntu
     image: docker.io/pycontribs/ubuntu
     pre_build_image: true
+  - name: ubuntu1804
+    image: docker.io/ubuntu:18.04
 provisioner:
   name: ansible
   env:
