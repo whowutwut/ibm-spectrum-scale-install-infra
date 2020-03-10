@@ -11,6 +11,6 @@
     - import_tasks: apt/build.yml
       when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Debian'
 
-    - import_tasks: rpm/build.yml
+    - import_tasks: yum/build.yml
       when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
   when: not molecule
