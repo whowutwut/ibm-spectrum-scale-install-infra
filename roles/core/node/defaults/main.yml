@@ -74,7 +74,7 @@ scale_build_gplsrc_prereqs_yum:
 scale_build_gplsrc_prereqs_apt:
   - gcc
   - g++
-  - kernel-devel
+  - linux-headers-$(uname -r)
   - make
 
 ## List of RPMs to install specific to rhel8 when building Linux kernel extension from source
