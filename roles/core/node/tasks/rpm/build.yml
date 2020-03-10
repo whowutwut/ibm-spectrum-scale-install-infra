@@ -11,13 +11,13 @@
     #
     - name: build | Install prereqs for building GPL module from source
       yum:
-        name: "{{ scale_build_gplsrc_prereqs }}"
+        name: "{{ scale_build_gplsrc_prereqs_yum }}"
         state: present
       when: ansible_pkg_mgr == 'yum'
 
     - name: build | Install prereqs for building GPL module from source
       dnf:
-        name: "{{ scale_build_gplsrc_prereqs }}"
+        name: "{{ scale_build_gplsrc_prereqs_yum }}"
         state: present
       when: ansible_pkg_mgr == 'dnf'
 

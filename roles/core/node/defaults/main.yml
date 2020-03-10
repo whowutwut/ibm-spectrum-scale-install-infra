@@ -65,8 +65,15 @@ scale_install_gplbin_prereqs:
   - glibc-devel
 
 ## List of RPMs to install when building Linux kernel extension from source
-scale_build_gplsrc_prereqs:
+scale_build_gplsrc_prereqs_yum:
   - gcc-c++
+  - kernel-devel
+  - make
+
+## List of RPMs to install when building Linux kernel extension from source
+scale_build_gplsrc_prereqs_apt:
+  - gcc
+  - g++
   - kernel-devel
   - make
 

@@ -11,7 +11,7 @@
     #
     - name: build-apt | Install prereqs for building GPL module from source
       apt:
-        name: "{{ scale_build_gplsrc_prereqs }}"
+        name: "{{ scale_build_gplsrc_prereqs_apt }}"
         state: present
 
     #
