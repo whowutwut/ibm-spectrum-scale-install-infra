@@ -1,0 +1,8 @@
+---
+- name: yum/sw | Install required packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - tar
+    - which
