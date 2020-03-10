@@ -1,11 +1,7 @@
 ---
 # Install the packages for apt based OS
 
-- name: Print install welcome msg
-  debug:
-    msg: "Enter apt/install.yml for APT based OS ..."
-
-- name: Install dependencies  (VKHU_DEBUG - TODO - this should move somewher else??)
+- name: apt/install | Install dependency packages from the OS repository
   apt:
     name: "{{ item }}"
     state: present

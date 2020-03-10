@@ -1,0 +1,9 @@
+---
+- name: yum/set_vars | Set the pkgdir for yum based OS
+  set_fact:
+    scale_install_gpfs_pkgdir_name: "{{ gpfs_path }}/gpfs_rpms"
+
+- name: install | Stat extracted packages
+  stat:
+    path: "{{ scale_install_gpfs_pkgdir_name }}"
+  register: scale_install_gpfs_pkgdir
