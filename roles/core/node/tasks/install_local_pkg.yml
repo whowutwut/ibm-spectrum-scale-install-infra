@@ -2,7 +2,7 @@
 # Local package installation method
 
 - block: ## run_once: true
-    - name: "install | Check if local installation package exists in:  {{ scale_install_localpkg_path }}"
+    - name: install | Stat local installation package
       stat:
         path: "{{ scale_install_localpkg_path }}"
       register: scale_install_localpkg
