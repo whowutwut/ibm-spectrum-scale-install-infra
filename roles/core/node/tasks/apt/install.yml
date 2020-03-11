@@ -28,11 +28,17 @@
   with_items:
     - "{{ scale_install_all_pkgs }}"
 
+- name: Touch the local apt config file, so that it exists
+  file:
+    path: "/etc/apt/sources.list.d/gpfs.local.list"
+    state: touch
+
 - name: Create a local apt config file
   blockinfile:
-    marker: "# {mark} {{ item }} ANSIBLE MANAGED BLOCK"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
     block: "deb file:{{ scale_install_gpfs_pkgdir_name  }}/ ./"
     dest: "/etc/apt/sources.list.d/gpfs.local.list"
+
 
 #
 # Install or update GPFS packages
