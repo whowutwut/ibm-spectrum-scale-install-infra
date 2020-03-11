@@ -39,11 +39,10 @@
 #
 - name: Install the GPFS packages
   block:
-
     - name: install the packages
       apt:
         name: "{{ local_all_pkgs }}"
-      state: present
+        state: present
       register: scale_install_result
 
     # # VKHU_DEBUG - HACK
