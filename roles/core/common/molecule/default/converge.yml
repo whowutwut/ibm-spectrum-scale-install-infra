@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    scale_version: "{{ lookup('env', 'MOL_SCALE_VERSION') }}"
+  tasks:
+    - name: "Include common"
+      include_role:
+        name: "common"
