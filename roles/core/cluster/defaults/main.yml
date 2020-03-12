@@ -37,6 +37,9 @@ scale_cluster_quorum: false
 ## you'll likely want to define per-node roles in your inventory
 scale_cluster_manager: false
 
+scale_cluster_yum_packages:
+  - iproute
+  - sysvinit-tools
 
 ## Default filesystem parameters -
 ## can be overridden for each filesystem individually
