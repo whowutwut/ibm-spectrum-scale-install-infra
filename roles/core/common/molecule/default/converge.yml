@@ -3,6 +3,9 @@
   hosts: all
   vars:
     scale_version: "{{ lookup('env', 'MOL_SCALE_VERSION') }}"
+    # NOTE: This forces the molecule testing environment to be local-pkg, 
+    # TODO: we may want to consider thinking about how to override this and test other methods of install
+    scale_install_localpkg_path: "/root/Spectrum_Scale_Advanced-5.0.4.0-x86_64-Linux-install"
   tasks:
     - name: "Include common"
       include_role:
