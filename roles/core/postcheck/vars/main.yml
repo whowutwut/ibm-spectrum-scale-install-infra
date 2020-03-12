@@ -1,2 +1,1 @@
----
-# Variables for the IBM Spectrum Scale (GPFS) postcheck role -
+../../common/vars/main.yml
