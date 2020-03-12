@@ -1,6 +1,10 @@
 ---
 # Local package installation method
 
+- name: install | resolve OS package dependencies before installing from local package
+  include_tasks: yum/install.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
 - block:  ## run_once: true
     - name: install | Stat local installation package
       stat:

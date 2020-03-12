@@ -72,3 +72,8 @@ scale_build_gplsrc_prereqs:
 scale_build_gplsrc_el8_prereqs:
   - elfutils
   - elfutils-devel
+
+## List of Packages to install specific to the node role
+scale_yum_node_prereqs:
+  - which
+  - tar
