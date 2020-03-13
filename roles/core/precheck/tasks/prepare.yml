@@ -16,6 +16,13 @@
 # Configure SSH server
 #
 - block:  ## when: scale_prepare_enable_ssh_login
+    - name: Install packages that are needed for ssh configuration
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - openssh-server
+
     - name: prepare | Enable SSH root login
       lineinfile:
         path: /etc/ssh/sshd_config

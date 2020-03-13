@@ -36,7 +36,7 @@ scale_prepare_exchange_keys: false
 scale_prepare_pubkey_path: /root/.ssh/id_rsa.pub
 
 ## Whether or not enable SSH root login and pubkey authentication
-scale_prepare_enable_ssh_login: false
+scale_prepare_enable_ssh_login: true
 
 ## Whether or not to disable SSH hostkey checking
 scale_prepare_disable_ssh_hostkeycheck: false

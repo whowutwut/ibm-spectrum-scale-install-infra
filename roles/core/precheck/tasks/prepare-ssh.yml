@@ -1,0 +1,23 @@
+---
+#
+# Configure SSH server
+#
+- name: prepare-ssh
+  include_tasks: yum/install-ssh.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: prepare | Enable SSH root login
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: PermitRootLogin
+    line: PermitRootLogin yes
+    state: present
+  notify: reload-sshd
+
+- name: prepare | Enable SSH pubkey authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: PubkeyAuthentication
+    line: PubkeyAuthentication yes
+    state: present
+  notify: reload-sshd
