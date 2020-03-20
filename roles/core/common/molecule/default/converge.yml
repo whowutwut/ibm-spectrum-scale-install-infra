@@ -1,6 +1,6 @@
 ---
 - name: Converge
-  hosts: all
+  hosts: cluster01_test
   vars:
     scale_version: "{{ lookup('env', 'MOL_SCALE_VERSION') }}"
     # NOTE: This forces the molecule testing environment to be local-pkg,
