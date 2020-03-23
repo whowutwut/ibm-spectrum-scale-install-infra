@@ -15,7 +15,8 @@ platforms:
 provisioner:
   name: ansible
   env:
-    # Allow an command line override to provide SCALE_VERSION to molecule
+    # Allow an command line override the following variables to molecule
     MOL_SCALE_VERSION: '${SCALE_VERSION:-"4.1.1.0"}'
+    MOL_RUN_SCALE_CMDS: '${RUN_SCALE_CMDS:-"true"}'
 verifier:
   name: ansible

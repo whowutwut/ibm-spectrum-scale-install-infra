@@ -5,7 +5,7 @@
 
 ## Specify the Spectrum Scale version that you want to install on your nodes
 #scale_version: 4.1.1.0
-
+run_scale_cmds: true
 
 ## Specify the URL of the (existing) Spectrum Scale YUM repository
 ## (copy the contents of /usr/lpp/mmfs/.../gpfs_rpms to build your repository)
