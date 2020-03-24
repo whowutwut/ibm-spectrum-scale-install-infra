@@ -75,6 +75,8 @@
     - name: cluster | Create new cluster
       command: /usr/lpp/mmfs/bin/mmcrcluster -N /var/tmp/NodeFile -C {{ scale_cluster_clustername }}
       notify: accept-licenses
+      when:
+        - run_scale_cmds
 
     # - name: cluster | Cleanup new cluster NodeFile
     #   file:
