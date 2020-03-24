@@ -7,7 +7,9 @@
 - name: cluster | Start daemons
   command: /usr/lpp/mmfs/bin/mmstartup -N localhost
   #when: 'scale_cluster_candidates' in group_names  ## only start new nodes
-  when: not scale_daemon_running  ## start all nodes
+  when:
+    - not scale_daemon_running  ## start all nodes
+    - run_scale_cmds | bool
   notify: wait-daemon-active
 
 - meta: flush_handlers
@@ -33,7 +35,9 @@
           notify: accept-licenses
 
       when: scale_storage_changefile is changed
-  when: groups['scale_cluster_members'] is defined
+  when:
+    - groups['scale_cluster_members'] is defined
+    - run_scale_cmds | bool
   run_once: true
   delegate_to: "{{ groups['scale_cluster_members'].0 }}"
 
