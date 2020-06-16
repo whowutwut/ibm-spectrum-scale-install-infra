@@ -1,0 +1,5 @@
+---
+- name: Install OS package pre-reqs for the node role
+  yum:
+    name: "{{ scale_yum_node_prereqs }}"
+    state: present

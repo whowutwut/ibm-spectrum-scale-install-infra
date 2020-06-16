@@ -1,9 +1,25 @@
 ---
 - name: Converge
-  hosts: all
+  hosts: cluster01_test
   vars:
     scale_version: "{{ lookup('env', 'MOL_SCALE_VERSION') }}"
+    # NOTE: This forces the molecule testing environment to be local-pkg,
+    # TODO: we may want to consider thinking about how to override this and test other methods of install
+    scale_install_localpkg_path: "/root/Spectrum_Scale_Advanced-5.0.4.0-x86_64-Linux-install"
   tasks:
-    - name: "Include common"
+    # Include all the roles under core directory to be execercised from molecule
+    - name: "Include core/common"
       include_role:
         name: "common"
+    - name: "Include core/precheck"
+      include_role:
+        name: "precheck"
+    - name: "Include core/node"
+      include_role:
+        name: "node"
+    - name: "Include core/cluster"
+      include_role:
+        name: "cluster"
+    - name: "Include core/postcheck"
+      include_role:
+        name: "postcheck"

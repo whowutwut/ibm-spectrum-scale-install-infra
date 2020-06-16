@@ -1,0 +1,5 @@
+---
+- name: Install OS package pre-reqs for the cluster role
+  yum:
+    name: "{{ scale_cluster_yum_packages }}"
+    state: present

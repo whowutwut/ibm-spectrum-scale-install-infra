@@ -2,6 +2,9 @@
 # Default variables for the IBM Spectrum Scale (GPFS) cluster role -
 # either edit this file or define your own variables to override the defaults
 
+tmp_dir: "/var/tmp"
+node_file: "{{ tmp_dir }}/NodeFile"
+change_file: "{{ tmp_dir }}/ChangeFile"
 
 ## Specify the Spectrum Scale version that you want to install on your nodes
 #scale_version: 4.1.1.0
@@ -37,6 +40,9 @@ scale_cluster_quorum: false
 ## you'll likely want to define per-node roles in your inventory
 scale_cluster_manager: false
 
+scale_cluster_yum_packages:
+  - iproute
+  - sysvinit-tools
 
 ## Default filesystem parameters -
 ## can be overridden for each filesystem individually

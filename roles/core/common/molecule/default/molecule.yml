@@ -9,7 +9,10 @@ lint: |
 #  ansible-lint
 #  flake8
 platforms:
-  - name: instance
+  - name: centos7-vm1
+    image: docker.io/pycontribs/centos:7
+    pre_build_image: true
+  - name: centos7-vm2
     image: docker.io/pycontribs/centos:7
     pre_build_image: true
 provisioner:
@@ -17,5 +20,8 @@ provisioner:
   env:
     # Allow an command line override to provide SCALE_VERSION to molecule
     MOL_SCALE_VERSION: '${SCALE_VERSION:-"4.1.1.0"}'
+  inventory:
+    links:
+       hosts: ../../../../../hosts
 verifier:
   name: ansible
