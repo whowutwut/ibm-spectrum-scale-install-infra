@@ -1,0 +1,4 @@
+---
+- name: Welcome Owning
+  debug:
+    msg: "Welcome to remote mount - Owning"

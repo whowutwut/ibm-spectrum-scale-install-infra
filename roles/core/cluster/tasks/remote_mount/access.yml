@@ -1,0 +1,4 @@
+---
+- name: Welcome Access
+  debug:
+    msg: "Welcome to Remote Mount - Access"

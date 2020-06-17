@@ -19,6 +19,17 @@
 - import_tasks: finalize.yml
   tags: always
 
+  # remote mount functions
+- import_tasks: remote_mount/owning.yml
+  tags: [never, remote_mount_owning]
+  run_once: true
+  delegate_to: "{{ groups['owning'].0 }}"
+
+- import_tasks: remote_mount/access.yml
+  tags: [never, remote_mount_access]
+  run_once: true
+  delegate_to: "{{ groups['access'].0 }}"
+
 # cluster node remover playbook
 - import_tasks: removenode.yml
   tags: removenode
