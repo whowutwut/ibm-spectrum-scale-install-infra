@@ -1,4 +1,17 @@
 ---
+
+- name: debug
+  debug:
+    msg: "{{ groups['owning'].0 }}"
+
 - name: Welcome Owning
   debug:
     msg: "Welcome to remote mount - Owning"
+
+- name: Get the output of mmlscluster
+  command: "mmlscluster"
+  register: myout
+  
+- name: print 
+  debug:
+    msg: "{{ myout.stdout.split('\n') }}"

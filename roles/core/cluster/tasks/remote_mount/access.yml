@@ -1,4 +1,17 @@
 ---
+
+- name: debug
+  debug:
+    msg: "{{ groups['access'].0 }}"
+
 - name: Welcome Access
   debug:
     msg: "Welcome to Remote Mount - Access"
+
+- name: Get the output of mmlscluster
+  command: "mmlscluster"
+  register: myout
+  
+- name: print 
+  debug:
+    msg: "{{ myout.stdout.split('\n') }}"
