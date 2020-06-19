@@ -21,12 +21,12 @@
 
   # remote mount functions
 - import_tasks: remote_mount/owning.yml
-  tags: [never, remote_mount_owning]
+  tags: [never, remote_mount, remote_mount_owning]
   run_once: true
   delegate_to: "{{ groups['owning'].0 }}"
 
 - import_tasks: remote_mount/access.yml
-  tags: [never, remote_mount_access]
+  tags: [never, remote_mount, remote_mount_access]
   run_once: true
   delegate_to: "{{ groups['access'].0 }}"
 
