@@ -1,4 +1,8 @@
-# hosts:
+# sample hosts file
+# scale_cluster_quorum:  true|false  - determines quorum nodes
+# scale_cluster_manager: true|false  - determines manager nodes
+# scale_cluster_gui:     true|false  - determines GUI node
+#
 [cluster01]
 host-vm1 scale_cluster_quorum=true   scale_cluster_manager=true scale_cluster_gui=false
 host-vm3 scale_cluster_quorum=true   scale_cluster_manager=true scale_cluster_gui=false
