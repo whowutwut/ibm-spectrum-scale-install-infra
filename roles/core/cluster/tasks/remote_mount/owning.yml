@@ -1,17 +1,65 @@
 ---
 
-- name: debug
+- name: welcome
   debug:
-    msg: "{{ groups['owning'].0 }}"
+    msg: "Prepare owning cluster from access cluster, running on {{ groups['owning'].0 }} ..."
 
-- name: Welcome Owning
-  debug:
-    msg: "Welcome to remote mount - Owning"
+- name: "Run mmauth update command"
+  command: "{{ spectrum_scale_bin_path }}/mmauth update . -l AUTHONLY"
+  register: cmdout
 
-- name: Get the output of mmlscluster
-  command: "mmlscluster"
-  register: myout
-  
-- name: print 
+- name: "DEBUG | Print output"
   debug:
-    msg: "{{ myout.stdout.split('\n') }}"
+    msg: "{{ auth_output }}.stdout.split('\n') }}"
+  when: cmdout | bool
+
+- name: "Fetch over the Spectrum Scale files from the owning cluster ..."
+  fetch:
+    src: "/var/mmfs/ssl/id_rsa.pub"
+    dest: "{{ playbook_dir }}/owningCluster.id_rsa.pub"
+    flat: true
+
+- name: "Create the working directory: {{ owning_working_dir }}, if it does not exist"
+  file:
+    path: "{{ owning_working_dir }}"
+    state: directory
+
+- name: "Send over the GPFS public key to the owning cluster ..."
+  copy:
+    src: "/var/mmfs/ssl/id_rsa.pub"
+    dest: "{{ owning_working_dir }}/accessCluster_id_rsa.pub"
+
+- name: "Get the cluster name on access_cluster (localhost)"
+  ibm_spectrum_scale.install_infra.ibm_ss_cluster:
+    op: get
+  register: cluster_output
+  delegate_to: localhost
+
+- set_fact:
+    access_cluster_name: "{{ (cluster_output.result | from_json).clusterSummary.clusterName }}"
+
+- name: print access cluster name
+  debug:
+    msg: "{{ access_cluster_name }}"
+
+- name: "Check if '{{ access_cluster_name }}' is already defined ..."
+  command: "{{ spectrum_scale_bin_path }}/mmauth show {{ access_cluster_name }}"
+  register: mmauth_show
+  ignore_errors: true
+
+- name: "Run mmauth add command"
+  command: "{{ spectrum_scale_bin_path }}/mmauth add {{ access_cluster_name }} -k {{ owning_working_dir }}/accessCluster_id_rsa.pub"
+  register: cmdout
+  when: mmauth_show.failed
+
+- name: "DEBUG | Print output"
+  debug:
+    msg: "{{ auth_output }}.stdout.split('\n') }}"
+  when:
+    - cmdout | bool
+    - mmauth_show.failed
+
+- name: "Run mmauth grant for the cluster"
+  command: "{{ spectrum_scale_bin_path }}/mmauth grant {{ access_cluster_name }} -f {{ filesystem_name }}"
+  register: mmauth_grant_output
+  ignore_errors: true
