@@ -71,3 +71,10 @@ gpfs_cluster_system_profile:
    - gpfsprotocolrandomio
 
 scale_cluster_profile_system_path: /var/mmfs/etc/
+
+## Remote Mount 
+spectrum_scale_path: "/usr/lpp/mmfs"
+spectrum_scale_bin_path: "{{ spectrum_scale_path }}/bin"
+owning_working_dir: "/root/remote_mount"
+print_debug: false
+filesystem_name: fs1
