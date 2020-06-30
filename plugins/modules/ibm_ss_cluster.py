@@ -106,15 +106,9 @@ import sys
 import traceback
 from ansible.module_utils.basic import AnsibleModule
 
-try: 
-    from ansible.module_utils.ibm_ss_utils import RC_SUCCESS, SpectrumScaleLogger
-except:
-    from ibm_ss_utils import RC_SUCCESS, SpectrumScaleLogger
+from ansible_collections.ibm_spectrum_scale.install_infra.plugins.module_utils.ibm_ss_utils import RC_SUCCESS, SpectrumScaleLogger
 
-try: 
-    from ansible.module_utils.ibm_ss_cluster_utils import SpectrumScaleCluster
-except:
-    from ibm_ss_cluster_utils import SpectrumScaleCluster
+from ansible_collections.ibm_spectrum_scale.install_infra.plugins.module_utils.ibm_ss_cluster_utils import SpectrumScaleCluster
 
 
 def main():
