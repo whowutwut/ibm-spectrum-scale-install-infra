@@ -1,0 +1,108 @@
+---
+# tasks file for remote_mount
+- name: welcome
+  debug:
+    msg: "Prepare owning cluster from access cluster, running on {{ groups['access'].0 }} ..."
+
+- name: "Run mmauth update command"
+  command: "{{ spectrum_scale_bin_path }}/mmauth update . -l AUTHONLY"
+  register: auth_output
+
+- name: "Print 'mmauth update' output"
+  debug:
+    msg: "{{ auth_output }}.stdout.split('\n') }}"
+  when: print_debug | bool
+
+- name: Print the owning group name
+  debug:
+    msg: "{{ groups['owning'][0] }}"
+
+- set_fact:
+    owning_cluster_hostname: "{{ groups['owning'][0] }}"
+
+- name: "Get the cluster name on owning cluster"
+  ibm_spectrum_scale.install_infra.ibm_ss_cluster:
+    op: get
+  register: cluster_output
+  delegate_to: "{{ owning_cluster_hostname }}"
+
+- name: print the cluster output
+  debug:
+    msg: "{{ cluster_output.result | from_json }}"
+
+- set_fact:
+    owning_cluster_clustername: "{{ (cluster_output.result | from_json).clusterSummary.clusterName }}"
+
+- name: print owning cluster clustername
+  debug:
+    msg: "{{ owning_cluster_clustername }}"
+
+- set_fact:
+    owning_hosts: []
+    owning_shortname: []
+  when:
+    - owning is undefined
+
+- name: add the hostnames that are not owning hosts
+  set_fact:
+    owning: "{{ owning | default([]) + [ item.adminNodeName ] }}"
+    owning_shortname: "{{ owning_shortname | default([]) + [ item.adminNodeName.split('.')[0] ] }}"
+  with_items:
+    - "{{ ( cluster_output.result | from_json ).clusterNode }}"
+
+- name: Add owning hosts into /etc/hosts on the access cluster
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "^{{ item.ipAddress }}.*$"
+    line: "{{ item.ipAddress }} {{ item.adminNodeName }} {{ item.adminNodeName.split('.')[0] }}"
+    state: present
+  with_items:
+    - "{{ ( cluster_output.result | from_json ).clusterNode }}"
+
+# Add remote cluster
+- name: check if the cluster is already added to remote cluster
+  command: "{{ spectrum_scale_bin_path }}/mmremotecluster show {{ owning_cluster_clustername }}"
+  register: mmremotecluster_show
+  ignore_errors: true
+
+- name: Run mmremotecluster add for the cluster
+  command: "/usr/lpp/mmfs/bin/mmremotecluster add {{ owning_cluster_clustername }} -n {{ owning_shortname | join(',') }} -k {{ playbook_dir }}/owningCluster.id_rsa.pub"
+  register: remotecluster_add_output
+  when: mmremotecluster_show.failed
+
+- name: print out the mmremotecluster output
+  debug:
+    msg: "{{ remotecluster_add_output.stdout.split('\n') }}"
+  when:
+    - print_debug | bool
+    - mmremotecluster_show.failed
+
+- name: check if the remotefs is already added
+  command: "{{ spectrum_scale_bin_path }}/mmremotefs show {{ filesystem_name }}"
+  register: mmremotefs_show
+  ignore_errors: true
+
+- name: Run mmremotefs add for the cluster
+  command: "{{ spectrum_scale_bin_path }}/mmremotefs add {{ filesystem_name }} -f {{ filesystem_name }} -C {{ owning_cluster_clustername }} -T /{{ filesystem_name }}"
+  register: mmremotefs_add_output
+  when: mmremotefs_show.failed
+
+- name: print out the mmremotefs_add_output output
+  debug:
+    msg: "{{ mmremotefs_add_output.stdout.split('\n') }}"
+  when:
+    - mmremotefs_show.failed
+    - print_debug | bool
+
+- name: Mount the filesystem
+  command: "{{ spectrum_scale_bin_path }}/mmmount {{ filesystem_name }} -a"
+  register: mmmount_output
+
+- name: Check mount and display
+  command: "{{ spectrum_scale_bin_path }}/mmlsmount {{ filesystem_name }} -L"
+  register: mmlsmount_output
+  changed_when: false
+
+- name: Print out mmlsmount output
+  debug:
+    msg: "{{ mmlsmount_output.stdout.split('\n') }}"

@@ -1,2 +1,12 @@
 ---
 # tasks file for remote_mount
+
+- import_tasks: owning.yml
+  tags: [never, remote_mount, remote_mount_owning]
+  run_once: true
+  delegate_to: "{{ groups['owning'].0 }}"
+
+- import_tasks: access.yml
+  tags: [never, remote_mount, remote_mount_access]
+  run_once: true
+  delegate_to: "{{ groups['access'].0 }}"
