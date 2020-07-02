@@ -6,3 +6,5 @@ spectrum_scale_bin_path: "{{ spectrum_scale_path }}/bin"
 owning_working_dir: "/root/remote_mount"
 print_debug: false
 filesystem_name: fs1
+owning_gpfs_clustername: scale-owning-x.fyre.ibm.com
+access_gpfs_clustername: scale-access-x.fyre.ibm.com

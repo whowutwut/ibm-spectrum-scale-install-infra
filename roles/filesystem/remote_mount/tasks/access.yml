@@ -20,22 +20,20 @@
 - set_fact:
     owning_cluster_hostname: "{{ groups['owning'][0] }}"
 
-- name: "Get the cluster name on owning cluster"
-  ibm_spectrum_scale.install_infra.ibm_ss_cluster:
-    op: get
-  register: cluster_output
-  delegate_to: "{{ owning_cluster_hostname }}"
+# TODO: This is not working on python3
+#
+# - name: "Get the cluster name on owning cluster"
+#   ibm_spectrum_scale.install_infra.ibm_ss_cluster:
+#     op: get
+#   register: cluster_output
+#   delegate_to: "{{ owning_cluster_hostname }}"
 
-- name: print the cluster output
-  debug:
-    msg: "{{ cluster_output.result | from_json }}"
-
-- set_fact:
-    owning_cluster_clustername: "{{ (cluster_output.result | from_json).clusterSummary.clusterName }}"
+# - set_fact:
+#     owning_gpfs_clustername: "{{ (cluster_output.result | from_json).clusterSummary.clusterName }}"
 
 - name: print owning cluster clustername
   debug:
-    msg: "{{ owning_cluster_clustername }}"
+    msg: "{{ owning_gpfs_clustername }}"
 
 - set_fact:
     owning_hosts: []
@@ -61,12 +59,12 @@
 
 # Add remote cluster
 - name: check if the cluster is already added to remote cluster
-  command: "{{ spectrum_scale_bin_path }}/mmremotecluster show {{ owning_cluster_clustername }}"
+  command: "{{ spectrum_scale_bin_path }}/mmremotecluster show {{ owning_gpfs_clustername }}"
   register: mmremotecluster_show
   ignore_errors: true
 
 - name: Run mmremotecluster add for the cluster
-  command: "/usr/lpp/mmfs/bin/mmremotecluster add {{ owning_cluster_clustername }} -n {{ owning_shortname | join(',') }} -k {{ playbook_dir }}/owningCluster.id_rsa.pub"
+  command: "/usr/lpp/mmfs/bin/mmremotecluster add {{ owning_gpfs_clustername }} -n {{ owning_shortname | join(',') }} -k {{ playbook_dir }}/owningCluster.id_rsa.pub"
   register: remotecluster_add_output
   when: mmremotecluster_show.failed
 
@@ -83,7 +81,7 @@
   ignore_errors: true
 
 - name: Run mmremotefs add for the cluster
-  command: "{{ spectrum_scale_bin_path }}/mmremotefs add {{ filesystem_name }} -f {{ filesystem_name }} -C {{ owning_cluster_clustername }} -T /{{ filesystem_name }}"
+  command: "{{ spectrum_scale_bin_path }}/mmremotefs add {{ filesystem_name }} -f {{ filesystem_name }} -C {{ owning_gpfs_clustername }} -T /{{ filesystem_name }}"
   register: mmremotefs_add_output
   when: mmremotefs_show.failed
 
