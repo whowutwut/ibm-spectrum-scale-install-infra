@@ -28,16 +28,14 @@
     src: "/var/mmfs/ssl/id_rsa.pub"
     dest: "{{ owning_working_dir }}/accessCluster_id_rsa.pub"
 
-# TODO: This is not working on python3
-#
-# - name: "Get the cluster name on access_cluster (localhost)"
-#   ibm_spectrum_scale.install_infra.ibm_ss_cluster:
-#     op: get
-#   register: cluster_output
-#   delegate_to: localhost
+- name: "Get the cluster name on access_cluster (localhost)"
+  ibm_spectrum_scale.install_infra.ibm_ss_cluster:
+    op: get
+  register: cluster_output
+  delegate_to: localhost
 
-# - set_fact:
-#     access_gpfs_clustername: "{{ (cluster_output.result | from_json).clusterSummary.clusterName }}"
+- set_fact:
+    access_gpfs_clustername: "{{ (cluster_output.result | from_json).cluster_info.clusterSummary.clusterName }}"
 
 - name: print access cluster name
   debug:

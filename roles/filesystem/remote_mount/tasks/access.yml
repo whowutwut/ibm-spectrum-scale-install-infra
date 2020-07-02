@@ -20,16 +20,14 @@
 - set_fact:
     owning_cluster_hostname: "{{ groups['owning'][0] }}"
 
-# TODO: This is not working on python3
-#
-# - name: "Get the cluster name on owning cluster"
-#   ibm_spectrum_scale.install_infra.ibm_ss_cluster:
-#     op: get
-#   register: cluster_output
-#   delegate_to: "{{ owning_cluster_hostname }}"
+- name: "Get the cluster name on owning cluster"
+  ibm_spectrum_scale.install_infra.ibm_ss_cluster:
+    op: get
+  register: cluster_output
+  delegate_to: "{{ owning_cluster_hostname }}"
 
-# - set_fact:
-#     owning_gpfs_clustername: "{{ (cluster_output.result | from_json).clusterSummary.clusterName }}"
+- set_fact:
+    owning_gpfs_clustername: "{{ (cluster_output.result | from_json).cluster_info.clusterSummary.clusterName }}"
 
 - name: print owning cluster clustername
   debug:
@@ -46,7 +44,7 @@
     owning: "{{ owning | default([]) + [ item.adminNodeName ] }}"
     owning_shortname: "{{ owning_shortname | default([]) + [ item.adminNodeName.split('.')[0] ] }}"
   with_items:
-    - "{{ ( cluster_output.result | from_json ).clusterNode }}"
+    - "{{ ( cluster_output.result | from_json ).cluster_info.clusterNode }}"
 
 - name: Add owning hosts into /etc/hosts on the access cluster
   lineinfile:
@@ -55,7 +53,7 @@
     line: "{{ item.ipAddress }} {{ item.adminNodeName }} {{ item.adminNodeName.split('.')[0] }}"
     state: present
   with_items:
-    - "{{ ( cluster_output.result | from_json ).clusterNode }}"
+    - "{{ ( cluster_output.result | from_json ).cluster_info.clusterNode }}"
 
 # Add remote cluster
 - name: check if the cluster is already added to remote cluster
