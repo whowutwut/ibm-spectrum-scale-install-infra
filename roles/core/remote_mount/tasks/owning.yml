@@ -29,7 +29,7 @@
     dest: "{{ owning_working_dir }}/accessCluster_id_rsa.pub"
 
 - name: "Get the cluster name on access_cluster (localhost)"
-  ibm_spectrum_scale.install_infra.ibm_ss_cluster:
+  ibm_spectrum_scale.install_infra.ibm_spectrumscale_cluster:
     op: get
   register: cluster_output
   delegate_to: localhost

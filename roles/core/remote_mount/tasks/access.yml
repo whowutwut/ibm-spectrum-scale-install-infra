@@ -21,7 +21,7 @@
     owning_cluster_hostname: "{{ groups['owning'][0] }}"
 
 - name: "Get the cluster name on owning cluster"
-  ibm_spectrum_scale.install_infra.ibm_ss_cluster:
+  ibm_spectrum_scale.install_infra.ibm_spectrumscale_cluster:
     op: get
   register: cluster_output
   delegate_to: "{{ owning_cluster_hostname }}"
