@@ -288,6 +288,10 @@
     owning_nodes_name: "{{ owning_nodes_name }} + [ '{{ item.adminNodeName }}' ]"
   with_items: "{{ owning_cluster_nodes.json.nodes }}"
 
+  # hack, just want to force this into the public 9. hostname ... 
+- set_fact:
+    owning_nodes_name: [ "c943f1n01.pok.stglabs.ibm.com","c943f1n02.pok.stglabs.ibm.com","c943f1n03.pok.stglabs.ibm.com","c943f1n04.pok.stglabs.ibm.com" ]
+
 - name: DEBUG | Print out the array storing the nodes in the Storage Cluster (owning)
   debug:
     msg: "{{ owning_nodes_name }}"
