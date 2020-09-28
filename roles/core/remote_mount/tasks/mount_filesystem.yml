@@ -343,7 +343,7 @@
     body_format: json
     body: |
       {
-        "remoteFilesystem": "{{ client_filesystem_name }}",
+        "remoteFilesystem": "{{ client_cluster_filesystem_name }}",
         "owningFilesystem": "{{ storage_cluster_filesystem_name }}",
         "owningCluster": "{{ owning_cluster_name }}",
         "remoteMountPath": "{{ client_cluster_remotemount_path | realpath }}",

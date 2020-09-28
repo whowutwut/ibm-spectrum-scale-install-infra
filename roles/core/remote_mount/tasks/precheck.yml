@@ -14,10 +14,10 @@
     msg: "client_cluster_gui_hostname is not defined"
   when: client_cluster_gui_hostname is undefined
 
-- name: "fail if not defined: client_filesystem_name"
+- name: "fail if not defined: client_cluster_filesystem_name"
   fail:
-    msg: "client_filesystem_name is not defined"
-  when: client_filesystem_name is undefined
+    msg: "client_cluster_filesystem_name is not defined"
+  when: client_cluster_filesystem_name is undefined
 
 - name: "fail if not defined: client_cluster_remotemount_path"
   fail:
