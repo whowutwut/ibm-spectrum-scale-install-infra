@@ -1,13 +1,13 @@
 ---
-- name: "fail if not defined: client_gui_user"
+- name: "fail if not defined: client_cluster_gui_username"
   fail:
-    msg: "client_gui_user is not defined"
-  when: client_gui_user is undefined
+    msg: "client_cluster_gui_username is not defined"
+  when: client_cluster_gui_username is undefined
 
-- name: "fail if not defined: client_gui_password"
+- name: "fail if not defined: client_cluster_gui_password"
   fail:
-    msg: "client_gui_password is not defined"
-  when: client_gui_password is undefined
+    msg: "client_cluster_gui_password is not defined"
+  when: client_cluster_gui_password is undefined
 
 - name: "fail if not defined: client_cluster_hostname"
   fail:

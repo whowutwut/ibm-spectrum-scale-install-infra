@@ -10,8 +10,8 @@
     force_basic_auth: yes
     url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ remote_mount_endpoint }}/remotefilesystems/{{ client_filesystem_name }}
     method: GET
-    user: "{{ client_gui_user }}"
-    password: "{{ client_gui_password }}"
+    user: "{{ client_cluster_gui_username }}"
+    password: "{{ client_cluster_gui_password }}"
     body_format: json
     status_code:
       - 400
