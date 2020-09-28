@@ -6,10 +6,10 @@
   uri:
     validate_certs: no
     force_basic_auth: yes
-    url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ scalemgmt_endpoint }}/cluster
+    url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ scalemgmt_endpoint }}/cluster
     method: GET
-    user: "{{ storage_gui_user }}"
-    password: "{{ storage_gui_password }}"
+    user: "{{ storage_cluster_gui_username }}"
+    password: "{{ storage_cluster_gui_password }}"
     body_format: json
     status_code:
       - 200
@@ -24,7 +24,7 @@
   uri:
     validate_certs: no
     force_basic_auth: yes
-    url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ scalemgmt_endpoint }}/cluster
+    url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ scalemgmt_endpoint }}/cluster
     method: GET
     user: "{{ client_gui_user }}"
     password: "{{ client_gui_password }}"
@@ -61,10 +61,10 @@
   uri:
     validate_certs: no
     force_basic_auth: yes
-    url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ access_cluster_name }}
+    url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ access_cluster_name }}
     method: GET
-    user: "{{ storage_gui_user }}"
-    password: "{{ storage_gui_password }}"
+    user: "{{ storage_cluster_gui_username }}"
+    password: "{{ storage_cluster_gui_password }}"
     body_format: json
     status_code:
       - 200
@@ -77,10 +77,10 @@
       uri:
         validate_certs: no
         force_basic_auth: true
-        url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ access_cluster_name }}
+        url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ access_cluster_name }}
         method: DELETE
-        user: "{{ storage_gui_user }}"
-        password: "{{ storage_gui_password }}"
+        user: "{{ storage_cluster_gui_username }}"
+        password: "{{ storage_cluster_gui_password }}"
         status_code:
           - 202
       register: delete_call
@@ -89,10 +89,10 @@
       uri:
         validate_certs: no
         force_basic_auth: true
-        url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ delete_call.json.jobs[0].jobId }}
+        url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ delete_call.json.jobs[0].jobId }}
         method: GET
-        user: "{{ storage_gui_user }}"
-        password: "{{ storage_gui_password }}"
+        user: "{{ storage_cluster_gui_username }}"
+        password: "{{ storage_cluster_gui_password }}"
       register: completed_check
       until: completed_check.json.jobs[0].status == "COMPLETED"
       retries: "{{ restapi_retries_count }}"
@@ -103,7 +103,7 @@
   uri:
     validate_certs: no
     force_basic_auth: yes
-    url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ remote_mount_endpoint }}/authenticationkey
+    url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ remote_mount_endpoint }}/authenticationkey
     method: GET
     user: "{{ client_gui_user }}"
     password: "{{ client_gui_password }}"
@@ -121,7 +121,7 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters
+    url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters
     method: POST
     user: "{{ storage_gui_user }}"
     password: "{{ storage_gui_password }}"
@@ -139,7 +139,7 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ send_key.json.jobs[0].jobId }}
+    url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ send_key.json.jobs[0].jobId }}
     method: GET
     user: "{{ storage_gui_user }}"
     password: "{{ storage_gui_password }}"
@@ -155,7 +155,7 @@
   uri:
     validate_certs: no
     force_basic_auth: yes
-    url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ owning_cluster_name }}
+    url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ owning_cluster_name }}
     method: GET
     user: "{{ client_gui_user }}"
     password: "{{ client_gui_password }}"
@@ -171,7 +171,7 @@
       uri:
         validate_certs: no
         force_basic_auth: true
-        url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ owning_cluster_name }}
+        url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ owning_cluster_name }}
         method: DELETE
         user: "{{ client_gui_user }}"
         password: "{{ client_gui_password }}"
@@ -183,7 +183,7 @@
       uri:
         validate_certs: no
         force_basic_auth: true
-        url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ delete_call.json.jobs[0].jobId }}
+        url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ delete_call.json.jobs[0].jobId }}
         method: GET
         user: "{{ client_gui_user }}"
         password: "{{ client_gui_password }}"
@@ -197,10 +197,10 @@
   uri:
     validate_certs: no
     force_basic_auth: yes
-    url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ remote_mount_endpoint }}/authenticationkey
+    url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ remote_mount_endpoint }}/authenticationkey
     method: GET
-    user: "{{ storage_gui_user }}"
-    password: "{{ storage_gui_password }}"
+    user: "{{ storage_cluster_gui_username }}"
+    password: "{{ storage_cluster_gui_password }}"
     body_format: json
     status_code:
       - 200
@@ -219,7 +219,7 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ remote_mount_endpoint }}/owningclusters
+    url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ remote_mount_endpoint }}/owningclusters
     method: GET
     user: "{{ client_gui_user }}"
     password: "{{ client_gui_password }}"
@@ -241,10 +241,10 @@
   uri:
     validate_certs: no
     force_basic_auth: yes
-    url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ scalemgmt_endpoint }}/nodes
+    url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ scalemgmt_endpoint }}/nodes
     method: GET
-    user: "{{ storage_gui_user }}"
-    password: "{{ storage_gui_password }}"
+    user: "{{ storage_cluster_gui_username }}"
+    password: "{{ storage_cluster_gui_password }}"
     body_format: json
     status_code:
       - 200
@@ -266,7 +266,7 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ remote_mount_endpoint }}/owningclusters
+    url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ remote_mount_endpoint }}/owningclusters
     method: POST
     user: "{{ client_gui_user }}"
     password: "{{ client_gui_password }}"
@@ -285,7 +285,7 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ uri_result.json.jobs[0].jobId }}
+    url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ uri_result.json.jobs[0].jobId }}
     method: GET
     user: "{{ client_gui_user }}"
     password: "{{ client_gui_password }}"
@@ -302,10 +302,10 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ access_cluster_name }}/access/{{ storage_filesystem_name }}
+    url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ remote_mount_endpoint }}/remoteclusters/{{ access_cluster_name }}/access/{{ storage_cluster_filesystem_name }}
     method: POST
-    user: "{{ storage_gui_user }}"
-    password: "{{ storage_gui_password }}"
+    user: "{{ storage_cluster_gui_username }}"
+    password: "{{ storage_cluster_gui_password }}"
     body_format: json
     body: |
       {
@@ -319,10 +319,10 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ storage_cluster_hostname }}:{{ storage_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ uri_result.json.jobs[0].jobId }}
+    url: https://{{ storage_cluster_gui_hostname }}:{{ storage_cluster_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ uri_result.json.jobs[0].jobId }}
     method: GET
-    user: "{{ storage_gui_user }}"
-    password: "{{ storage_gui_password }}"
+    user: "{{ storage_cluster_gui_username }}"
+    password: "{{ storage_cluster_gui_password }}"
   register: completed_check
   until: completed_check.json.jobs[0].status == "COMPLETED"
   retries: "{{ restapi_retries_count }}"
@@ -336,7 +336,7 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ remote_mount_endpoint }}/remotefilesystems
+    url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ remote_mount_endpoint }}/remotefilesystems
     method: POST
     user: "{{ client_gui_user }}"
     password: "{{ client_gui_password }}"
@@ -344,9 +344,9 @@
     body: |
       {
         "remoteFilesystem": "{{ client_filesystem_name }}",
-        "owningFilesystem": "{{ storage_filesystem_name }}",
+        "owningFilesystem": "{{ storage_cluster_filesystem_name }}",
         "owningCluster": "{{ owning_cluster_name }}",
-        "remoteMountPath": "{{ client_remotemount_path | realpath }}",
+        "remoteMountPath": "{{ client_cluster_remotemount_path | realpath }}",
         "mountOptions": "{{ access_mount_attributes }}",
         "automount": "yes",
         "mountOnNodes": "all"
@@ -359,7 +359,7 @@
   uri:
     validate_certs: no
     force_basic_auth: true
-    url: https://{{ client_cluster_hostname }}:{{ client_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ send_key.json.jobs[0].jobId }}
+    url: https://{{ client_cluster_hostname }}:{{ client_cluster_gui_port }}/{{ scalemgmt_endpoint }}/jobs/{{ send_key.json.jobs[0].jobId }}
     method: GET
     user: "{{ client_gui_user }}"
     password: "{{ client_gui_password }}"
