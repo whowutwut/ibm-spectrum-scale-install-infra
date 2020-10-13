@@ -11,7 +11,7 @@
       - 202
   register: delete_call
 
-- name: Client Cluster (access) | Check the results from the DELETE
+- name: "Client Cluster (access) | Checking result from job: {{ delete_call.json.jobs[0].jobId }}"
   uri:
     validate_certs: no
     force_basic_auth: true
