@@ -10,10 +10,10 @@
 
 # Sample definitions can be found in samples/vars/storage_vars.yml
 
-- hosts: cluster01
+- hosts: ocp4storage2
   vars:
-    - scale_version: 5.0.4.0
-    - scale_install_localpkg_path: /root/Spectrum_Scale_Standard-5.0.4.0-x86_64-Linux-install
+    - scale_version: 5.1.0.0
+    - scale_install_localpkg_path: /root/Spectrum_Scale_Data_Management-5.1.0.0-x86_64-Linux-install
   pre_tasks:
     - include_vars: storage_vars.yml
   roles:

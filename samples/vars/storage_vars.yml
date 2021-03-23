@@ -15,23 +15,43 @@
 # multiple times...
 
 scale_storage:
-  - filesystem: gpfs01
-    blockSize: 4M
-    defaultMetadataReplicas: 2
-    defaultDataReplicas: 2
-    numNodes: 16
+  - filesystem: fs1
+    overwriteNSDs: true
     automaticMountOption: true
-    defaultMountPoint: /mnt/gpfs01
     disks:
       - device: /dev/sdb
-        nsd: nsd_1
-        servers: scale01
-        failureGroup: 10
-        usage: metadataOnly
-        pool: system
+        servers: c943f1n05-pvt
       - device: /dev/sdc
-        nsd: nsd_2
-        servers: scale01
-        failureGroup: 10
-        usage: dataOnly
-        pool: data
+        servers: c943f1n05-pvt
+      - device: /dev/sdd
+        servers: c943f1n05-pvt
+      - device: /dev/sde
+        servers: c943f1n05-pvt
+      - device: /dev/sdf
+        servers: c943f1n05-pvt
+      - device: /dev/sdg
+        servers: c943f1n05-pvt
+      - device: /dev/sdb
+        servers: c943f1n06-pvt
+      - device: /dev/sdc
+        servers: c943f1n06-pvt
+      - device: /dev/sdd
+        servers: c943f1n06-pvt
+      - device: /dev/sde
+        servers: c943f1n06-pvt
+      - device: /dev/sdf
+        servers: c943f1n06-pvt
+      - device: /dev/sdg
+        servers: c943f1n06-pvt
+      - device: /dev/sdb
+        servers: c943f1n08-pvt
+      - device: /dev/sdc
+        servers: c943f1n08-pvt
+      - device: /dev/sdd
+        servers: c943f1n08-pvt
+      - device: /dev/sde
+        servers: c943f1n08-pvt
+      - device: /dev/sdf
+        servers: c943f1n08-pvt
+      - device: /dev/sdg
+        servers: c943f1n08-pvt

@@ -4,5 +4,5 @@ export ANSIBLE_LOG_PATH=/tmp/ansible_$(date "+%Y%m%d%H%M%S").log
 
 IFS=$','
 
-echo 'Running ansible-playbook -i hosts playbook_localpkg.yml'
-ansible-playbook -i hosts playbook_localpkg.yml
+echo 'Running ansible-playbook -i hosts playbook_storage.yml'
+ansible-playbook -i hosts playbook_storage.yml

@@ -1,6 +1,5 @@
 # hosts:
-# Sample host file for deploying IBM Spectrum Scale (GPFS) cluster
-[cluster01]
-host-vm1 scale_cluster_quorum=true   scale_cluster_manager=true scale_cluster_gui=false is_protocol_node=true
-host-vm2 scale_cluster_quorum=true   scale_cluster_manager=true scale_cluster_gui=false is_protocol_node=false
-host-vm3 scale_cluster_quorum=true   scale_cluster_manager=true scale_cluster_gui=false is_protocol_node=false
+[ocp4storage2]
+c943f1n05-pvt scale_cluster_quorum=true   scale_cluster_manager=true scale_cluster_gui=true is_protocol_node=true
+c943f1n06-pvt scale_cluster_quorum=true   scale_cluster_manager=true scale_cluster_gui=false is_protocol_node=false
+c943f1n08-pvt scale_cluster_quorum=true   scale_cluster_manager=true scale_cluster_gui=false is_protocol_node=false
